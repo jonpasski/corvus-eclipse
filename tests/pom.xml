@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>us.coastalhacking.corvus.eclipse</groupId>
+	<artifactId>us.coastalhacking.corvus.eclipse.tests</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>us.coastalhacking.corvus.eclipse</groupId>
+		<artifactId>us.coastalhacking.corvus.eclipse.root</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</parent>
+
+	<profiles>
+		<profile>
+			<id>macos</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<tycho.surefire.extra.vmargs>-XstartOnFirstThread</tycho.surefire.extra.vmargs>
+			</properties>
+		</profile>
+	</profiles>
+
+	<modules>
+		<module>us.coastalhacking.corvus.eclipse.ui.impl.tests</module>
+		<!-- <module>us.coastalhacking.corvus.eclipse.ui.di.tests</module> -->
+	</modules>
+</project>

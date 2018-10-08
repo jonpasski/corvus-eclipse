@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="entrypoint"
+         point="org.eclipse.core.resources.markers">
+      <persistent
+            value="true">
+      </persistent>
+      <super
+            type="org.eclipse.core.resources.bookmark">
+      </super>
+      <super
+            type="org.eclipse.core.resources.textmarker">
+      </super>
+   </extension>
+   <extension
+            point="org.eclipse.ui.editors.markerAnnotationSpecification">
+      <specification
+            annotationType="us.coastalhacking.corvus.eclipse.resources.entrypoint.annotation"
+            colorPreferenceKey="entryPointIndicationColor"
+            colorPreferenceValue="128,0,128"
+            contributesToHeader="true"
+            highlightPreferenceKey="entryPointIndicationHighlighting"
+            highlightPreferenceValue="false"
+            icon="icons/fugue/shadowless/door-open-in.png"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="true"
+            isGoToNextNavigationTargetKey="isEntryPointGoToNextNavigationTarget"
+            isGoToPreviousNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="isEntryPointGoToPreviousNavigationTarget"
+            label="Entry Points"
+            overviewRulerPreferenceKey="entryPointIndicationOverviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="4"
+            showInNextPrevDropdownToolbarAction="true"
+            showInNextPrevDropdownToolbarActionKey="showEntryPointInNextPrevDropdownToolbarAction"
+            symbolicIcon="info"
+            textPreferenceKey="entryPointIndication"
+            textPreferenceValue="true"
+            textStylePreferenceKey="entryPointTextStyle"
+            textStylePreferenceValue="DASHED_BOX"
+            verticalRulerPreferenceKey="entryPointIndicationVerticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.annotationTypes">
+      <type
+            markerType="us.coastalhacking.corvus.eclipse.resources.entrypoint"
+            name="us.coastalhacking.corvus.eclipse.resources.entrypoint.annotation">
+      </type>
+   </extension>
+</plugin>

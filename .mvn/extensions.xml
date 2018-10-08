@@ -1,0 +1,12 @@
+<extensions>
+	<extension>
+		<groupId>org.eclipse.tycho.extras</groupId>
+		<artifactId>tycho-pomless</artifactId>
+		<!--
+		http://www.eclipse.org/tycho/sitedocs-extras/tycho-p2-extras-plugin/plugin-info.html
+		Keep version into sync with configuration POM
+		Last Published: 2018-06-05
+		-->
+		<version>1.2.0</version>
+	</extension>
+</extensions>

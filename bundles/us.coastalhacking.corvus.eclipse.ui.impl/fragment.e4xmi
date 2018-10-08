@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_p7UuIHMQEeiaysDdmua0TQ">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_0VUyYHMREeiaysDdmua0TQ" featurename="commands" parentElementId="xpath:/">
+    <elements xsi:type="commands:Command" xmi:id="_7KTtMHMREeiaysDdmua0TQ" elementId="us.coastalhacking.corvus.eclipse.ui.command" commandName="Corvus Command">
+      <parameters xmi:id="_BgYecHMSEeiaysDdmua0TQ" elementId="us.coastalhacking.corvus.eclipse.ui.commandparameter.action" name="Action" optional="false"/>
+      <parameters xmi:id="_XCJ90HMSEeiaysDdmua0TQ" elementId="us.coastalhacking.corvus.eclipse.ui.commandparameter.marker" name="Marker" optional="false"/>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_sqCsQHMSEeiaysDdmua0TQ" featurename="menuContributions" parentElementId="xpath:/">
+    <elements xsi:type="menu:MenuContribution" xmi:id="_vmgdYHMSEeiaysDdmua0TQ" elementId="us.coastalhacking.corvus.eclipse.ui.menucontribution" positionInParent="after=additions" parentId="popup">
+      <children xsi:type="menu:Menu" xmi:id="_hGTG0HMTEeiaysDdmua0TQ" elementId="us.coastalhacking.corvus.eclipse.ui.menu" label="Corvus">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_nOWDIHMTEeiaysDdmua0TQ" elementId="us.coastalhacking.corvus.eclipse.ui.handledmenuitem.addentypoint" label="Add Entry Point" command="_7KTtMHMREeiaysDdmua0TQ">
+          <parameters xmi:id="_t2D-AHMTEeiaysDdmua0TQ" elementId="" name="us.coastalhacking.corvus.eclipse.ui.commandparameter.action" value="add"/>
+          <parameters xmi:id="_HUcc4HMUEeiaysDdmua0TQ" elementId="" name="us.coastalhacking.corvus.eclipse.ui.commandparameter.marker" value="entrypoint"/>
+        </children>
+      </children>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_n4-FwHMZEeiaysDdmua0TQ" featurename="handlers" parentElementId="xpath:/">
+    <elements xsi:type="commands:Handler" xmi:id="_qkX8EHMZEeiaysDdmua0TQ" elementId="us.coastalhacking.corvus.eclipse.ui.handler.event" contributionURI="bundleclass://us.coastalhacking.corvus.eclipse.ui.impl/us.coastalhacking.corvus.eclipse.ui.impl.EventPublishingHandler" command="_7KTtMHMREeiaysDdmua0TQ"/>
+  </fragments>
+</fragment:ModelFragments>

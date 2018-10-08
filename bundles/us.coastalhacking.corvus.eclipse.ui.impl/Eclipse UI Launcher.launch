@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
+<setAttribute key="additional_plugins"/>
+<booleanAttribute key="append.args" value="true"/>
+<booleanAttribute key="askclear" value="false"/>
+<booleanAttribute key="automaticAdd" value="true"/>
+<booleanAttribute key="automaticValidate" value="true"/>
+<stringAttribute key="bootstrap" value=""/>
+<stringAttribute key="checked" value="[NONE]"/>
+<booleanAttribute key="clearConfig" value="false"/>
+<booleanAttribute key="clearws" value="true"/>
+<booleanAttribute key="clearwslog" value="false"/>
+<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/Eclipse UI Launcher"/>
+<booleanAttribute key="default" value="false"/>
+<stringAttribute key="featureDefaultLocation" value="workspace"/>
+<stringAttribute key="featurePluginResolution" value="workspace"/>
+<booleanAttribute key="includeOptional" value="true"/>
+<stringAttribute key="location" value="${workspace_loc}/../runtime-EclipseUILauncher"/>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -console"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
+<stringAttribute key="pde.version" value="3.3"/>
+<stringAttribute key="product" value="org.eclipse.platform.ide"/>
+<setAttribute key="selected_features">
+<setEntry value="us.coastalhacking.corvus.eclipse.dependencies.feature:default"/>
+<setEntry value="us.coastalhacking.corvus.eclipse.ui.feature:default"/>
+</setAttribute>
+<stringAttribute key="selected_target_plugins" value="org.eclipse.equinox.console@default:default"/>
+<stringAttribute key="selected_workspace_plugins" value="us.coastalhacking.corvus.eclipse.ui.api@default:default,us.coastalhacking.corvus.eclipse.ui.di@default:default,us.coastalhacking.corvus.eclipse.ui.impl.tests@default:false,us.coastalhacking.corvus.eclipse.ui.impl@default:default"/>
+<booleanAttribute key="show_selected_only" value="false"/>
+<stringAttribute key="templateConfig" value="${target_home}/configuration/config.ini"/>
+<booleanAttribute key="tracing" value="false"/>
+<booleanAttribute key="useCustomFeatures" value="true"/>
+<booleanAttribute key="useDefaultConfig" value="true"/>
+<booleanAttribute key="useDefaultConfigArea" value="true"/>
+<booleanAttribute key="useProduct" value="false"/>
+</launchConfiguration>

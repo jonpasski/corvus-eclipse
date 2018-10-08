@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="us.coastalhacking.corvus.eclipse.ui.impl.CommandEventHandler">
+   <property name="event.topics" value="us/coastalhacking/corvus/eclipse/ui/marker/*"/>
+   <service>
+      <provide interface="org.osgi.service.event.EventHandler"/>
+   </service>
+   <reference cardinality="1..1" field="markerSupport" interface="us.coastalhacking.corvus.eclipse.ui.api.MarkerSupport" name="markerSupport"/>
+   <reference cardinality="1..1" field="workbench" interface="org.eclipse.e4.ui.workbench.IWorkbench" name="workbench"/>
+   <implementation class="us.coastalhacking.corvus.eclipse.ui.impl.CommandEventHandler"/>
+</scr:component>
