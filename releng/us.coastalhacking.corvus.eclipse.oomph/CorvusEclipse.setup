@@ -75,7 +75,7 @@
       <requirement
           name="*"/>
       <sourceLocator
-          rootFolder="${git.clone.corvus.eclipse.oomph.location}"
+          rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
       <repositoryList
           name="Photon">
@@ -146,5 +146,5 @@
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>
-  <description>Corvus-related Eclipse enhancements	</description>
+  <description>Corvus-related Eclipse enhancements</description>
 </setup:Project>
