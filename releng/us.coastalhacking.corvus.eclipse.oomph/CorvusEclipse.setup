@@ -45,8 +45,9 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="Neon"
-      storageURI="scope://Workspace"/>
+      defaultValue="Photon"
+      storageURI="scope://Workspace"
+      label="Target Platform"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
     <requirement
