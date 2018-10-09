@@ -5,15 +5,22 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
     xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
+    xmlns:pde="http://www.eclipse.org/oomph/setup/pde/1.0"
     xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
     xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/pde/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
     name="corvus.eclipse.git"
     label="Corvus Eclipse">
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="User Preferences">
+    <annotation
+        source="http://www.eclipse.org/oomph/setup/UserPreferences"/>
+  </setupTask>
   <setupTask
       xsi:type="jdt:JRETask"
       version="JavaSE-1.8"
@@ -42,6 +49,10 @@
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
+    <requirement
+        name="org.eclipse.oomph.setup.pde"/>
+    <repository
+        url="http://download.eclipse.org/releases/photon"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -66,7 +77,8 @@
     <description>${scope.project.label}</description>
   </setupTask>
   <setupTask
-      xsi:type="setup.targlets:TargletTask">
+      xsi:type="setup.targlets:TargletTask"
+      activateTarget="false">
     <targlet
         name="${scope.project.label}"
         activeRepositoryList="${eclipse.target.platform}">
@@ -76,9 +88,15 @@
             key="location">
           <value>${git.clone.location/releng/us.coastalhacking.corvus.eclipse.target/us.coastalhacking.corvus.eclipse.target.target}</value>
         </detail>
+        <detail
+            key="includeAllPlatforms">
+          <value>false</value>
+        </detail>
+        <detail
+            key="includeSource">
+          <value>true</value>
+        </detail>
       </annotation>
-      <requirement
-          name="org.eclipse.sdk.feature.group"/>
       <requirement
           name="*"/>
       <sourceLocator
@@ -88,6 +106,8 @@
           name="Photon">
         <repository
             url="http://download.eclipse.org/releases/photon"/>
+        <repository
+            url="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
       </repositoryList>
       <repositoryList
           name="Oxygen">
@@ -140,12 +160,17 @@
         rootFolder="${git.clone.location}"
         locateNestedProjects="true"/>
   </setupTask>
+  <setupTask
+      xsi:type="pde:TargetPlatformTask"
+      name="Generated from Corvus Eclipse">
+    <description></description>
+  </setupTask>
   <stream name="oomph"
       label="oomph">
     <setupTask
         xsi:type="setup:EclipseIniTask"
-        option="-Doomph.redirection.corvus.eclipse.oomph"
-        value="=https://raw.githubusercontent.com/CoastalHacking/corvus-eclipse/${com.github.corvus.eclipse.git.oomph}/releng/us.coastalhacking.corvus.eclipse.oomph/CorvusEclipse.setup->${git.clone.location|uri}/releng/us.coastalhacking.corvus.eclipse.oomph/CorvusEclipse.setup"
+        option="-Doomph.redirection.corvus.eclipse.git"
+        value="=https://raw.githubusercontent.com/CoastalHacking/corvus-eclipse/${scope.project.stream.name}/releng/us.coastalhacking.corvus.eclipse.oomph/CorvusEclipse.setup->${git.clone.location|uri}/releng/us.coastalhacking.corvus.eclipse.oomph/CorvusEclipse.setup"
         vm="true">
       <description>Set an Oomph redirection system property to redirect the logical location of this setup to its physical location in the Git clone.</description>
     </setupTask>
