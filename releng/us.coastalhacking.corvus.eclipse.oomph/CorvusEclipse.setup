@@ -109,36 +109,6 @@
         <repository
             url="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
       </repositoryList>
-      <repositoryList
-          name="Oxygen">
-        <repository
-            url="http://download.eclipse.org/releases/oxygen"/>
-      </repositoryList>
-      <repositoryList
-          name="Neon">
-        <repository
-            url="http://download.eclipse.org/releases/neon"/>
-      </repositoryList>
-      <repositoryList
-          name="Mars">
-        <repository
-            url="http://download.eclipse.org/releases/mars"/>
-      </repositoryList>
-      <repositoryList
-          name="Luna">
-        <repository
-            url="http://download.eclipse.org/releases/luna"/>
-      </repositoryList>
-      <repositoryList
-          name="Kepler">
-        <repository
-            url="http://download.eclipse.org/releases/kepler"/>
-      </repositoryList>
-      <repositoryList
-          name="Juno">
-        <repository
-            url="http://download.eclipse.org/releases/juno"/>
-      </repositoryList>
     </targlet>
   </setupTask>
   <setupTask
@@ -162,19 +132,20 @@
   </setupTask>
   <setupTask
       xsi:type="pde:TargetPlatformTask"
-      name="Generated from Corvus Eclipse">
+      name="Generated from ${scope.project.label}">
     <description></description>
   </setupTask>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.corvus.eclipse.git"
+      value="=https://raw.githubusercontent.com/CoastalHacking/corvus-eclipse/${scope.project.stream.name}/releng/us.coastalhacking.corvus.eclipse.oomph/CorvusEclipse.setup->${git.clone.location|uri}/releng/us.coastalhacking.corvus.eclipse.oomph/CorvusEclipse.setup"
+      vm="true">
+    <description>Set an Oomph redirection system property to redirect the logical location of this setup to its physical location in the Git clone.</description>
+  </setupTask>
+  <stream name="master"
+      label="master"/>
   <stream name="oomph"
-      label="oomph">
-    <setupTask
-        xsi:type="setup:EclipseIniTask"
-        option="-Doomph.redirection.corvus.eclipse.git"
-        value="=https://raw.githubusercontent.com/CoastalHacking/corvus-eclipse/${scope.project.stream.name}/releng/us.coastalhacking.corvus.eclipse.oomph/CorvusEclipse.setup->${git.clone.location|uri}/releng/us.coastalhacking.corvus.eclipse.oomph/CorvusEclipse.setup"
-        vm="true">
-      <description>Set an Oomph redirection system property to redirect the logical location of this setup to its physical location in the Git clone.</description>
-    </setupTask>
-  </stream>
+      label="oomph"/>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>
