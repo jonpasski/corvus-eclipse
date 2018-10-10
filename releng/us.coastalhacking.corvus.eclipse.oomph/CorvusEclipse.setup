@@ -112,8 +112,7 @@
     <description>${scope.project.label}</description>
   </setupTask>
   <setupTask
-      xsi:type="setup.targlets:TargletTask"
-      activateTarget="false">
+      xsi:type="setup.targlets:TargletTask">
     <targlet
         name="${scope.project.label}"
         activeRepositoryList="${eclipse.target.platform}">
