@@ -130,6 +130,10 @@
             key="includeSource">
           <value>true</value>
         </detail>
+        <detail
+            key="extraUnits">
+          <value>org.eclipse.equinox.executable.feature.group org.eclipse.jdt.feature.group org.eclipse.platform.sdk</value>
+        </detail>
       </annotation>
       <requirement
           name="*"/>
@@ -139,7 +143,7 @@
       <repositoryList
           name="Photon">
         <repository
-            url="http://download.eclipse.org/releases/photon"/>
+            url="http://download.eclipse.org/eclipse/updates/4.8"/>
         <repository
             url="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
       </repositoryList>
