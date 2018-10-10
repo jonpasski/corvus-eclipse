@@ -82,16 +82,6 @@
       <repository
           url="http://download.eclipse.org/releases/photon"/>
     </setupTask>
-    <setupTask
-        xsi:type="setup.p2:P2Task"
-        label="${scope.product.label} (${scope.product.version.label})">
-      <requirement
-          name="us.coastalhacking.corvus.eclipse.ui.feature"/>
-      <requirement
-          name="us.coastalhacking.corvus.eclipse.dependencies.feature"/>
-      <repository
-          url=""/>
-    </setupTask>
     <description>My Product for Photon.</description>
   </version>
   <description>Eclipse IDE plugins useful for security-centric Java code reviews</description>
