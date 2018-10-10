@@ -2,7 +2,7 @@
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
 <setAttribute key="additional_plugins"/>
 <booleanAttribute key="append.args" value="true"/>
-<booleanAttribute key="askclear" value="false"/>
+<booleanAttribute key="askclear" value="true"/>
 <booleanAttribute key="automaticAdd" value="true"/>
 <booleanAttribute key="automaticValidate" value="true"/>
 <stringAttribute key="bootstrap" value=""/>
@@ -23,6 +23,7 @@
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.platform.ide"/>
 <setAttribute key="selected_features">
+<setEntry value="org.eclipse.platform:default"/>
 <setEntry value="us.coastalhacking.corvus.eclipse.dependencies.feature:default"/>
 <setEntry value="us.coastalhacking.corvus.eclipse.ui.feature:default"/>
 </setAttribute>
