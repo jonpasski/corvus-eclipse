@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="us.coastalhacking.corvus.eclipse.provider.launch.CorvusTabProvider">
+   <service scope="prototype">
+      <provide interface="org.eclipse.debug.ui.ILaunchConfigurationTab2"/>
+   </service>
+   <reference cardinality="1..1" field="workspace" interface="org.eclipse.core.resources.IWorkspace" name="workspace"/>
+   <implementation class="us.coastalhacking.corvus.eclipse.provider.launch.CorvusTabProvider"/>
+</scr:component>

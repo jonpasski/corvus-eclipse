@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/us.coastalhacking.corvus.eclipse.ui.feature_0.1.0.qualifier.jar" id="us.coastalhacking.corvus.eclipse.ui.feature" version="0.1.0.qualifier">
+   <feature url="features/us.coastalhacking.corvus.eclipse.runtime.feature_0.1.0.qualifier.jar" id="us.coastalhacking.corvus.eclipse.runtime.feature" version="0.1.0.qualifier">
       <category name="corvuseclipse"/>
    </feature>
-   <feature url="features/us.coastalhacking.corvus.eclipse.dependencies.feature_0.1.0.qualifier.jar" id="us.coastalhacking.corvus.eclipse.dependencies.feature" version="0.1.0.qualifier">
+   <feature url="features/us.coastalhacking.corvus.eclipse.feature.group_0.1.0.qualifier.jar" id="us.coastalhacking.corvus.eclipse.feature.group" version="0.1.0.qualifier">
+      <category name="corvuseclipse"/>
+   </feature>
+   <feature url="features/us.coastalhacking.corvus.eclipse.sdk.feature_0.1.0.qualifier.jar" id="us.coastalhacking.corvus.eclipse.sdk.feature" version="0.1.0.qualifier">
       <category name="corvuseclipse"/>
    </feature>
    <category-def name="corvuseclipse" label="Corvus Eclipse"/>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Semiotics -->
+      <package
+            uri="https://model.coastalhacking.us/corvus/semiotics/0.1"
+            class="us.coastalhacking.corvus.semiotics.SemioticsPackage"
+            genModel="model/Semiotics.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated Semiotics -->
+      <factory
+            uri="https://model.coastalhacking.us/corvus/semiotics/0.1"
+            class="us.coastalhacking.corvus.semiotics.edit.SemioticsItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+</plugin>

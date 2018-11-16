@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" activate="activate" configuration-pid="corvus.emf.factory" configuration-policy="require" immediate="true" name="us.coastalhacking.corvus.emf.provider.CorvusTransactionalFactoryProvider">
+   <service>
+      <provide interface="org.eclipse.emf.transaction.TransactionalEditingDomain$Factory"/>
+   </service>
+   <reference bind="setInitializer" cardinality="0..n" interface="us.coastalhacking.corvus.emf.ResourceInitializer" name="corvus.emf.factory.initializers" policy="dynamic" policy-option="greedy" unbind="unsetInitializer"/>
+   <implementation class="us.coastalhacking.corvus.emf.provider.CorvusTransactionalFactoryProvider"/>
+</scr:component>

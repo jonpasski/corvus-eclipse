@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Corvus Util Provider
+Bundle-SymbolicName: us.coastalhacking.corvus.util.provider
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Coastal Hacking
+Automatic-Module-Name: us.coastalhacking.corvus.osgi.utils.provider
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.osgi.framework,
+ org.osgi.service.cm,
+ org.osgi.service.component.annotations,
+ us.coastalhacking.corvus.util
+Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/us.coastalhacking.corvus.util.provider.ConfigurationAdminHelperProvider.xml

@@ -1,0 +1,97 @@
+@GenModel(childCreationExtenders="true", editDirectory="/us.coastalhacking.corvus.semiotics/src-gen",
+//	editorDirectory="/us.coastalhacking.corvus.eclipse.editor/src-gen",
+	providerPackageSuffix="edit",
+	modelPluginVariables="org.eclipse.xtext.xbase.lib org.eclipse.emf.ecore.xcore.lib org.eclipse.core.resources",
+	presentationPackageSuffix="editor")
+@Ecore(nsURI="https://model.coastalhacking.us/corvus/semiotics/0.1")
+package us.coastalhacking.corvus.semiotics
+
+interface Semiotics extends Signifier, Signified {
+	container Root root opposite semiotics
+}
+
+interface Signifier {
+	String key
+	refers Signified[] signifieds opposite signifiers
+}
+
+interface Signified {
+	id String uuid
+	refers Signifier[] signifiers opposite signifieds
+}
+
+class Root {
+	contains Semiotics[] semiotics opposite root keys key
+}
+
+// Eclipse Resources
+class Attribute wraps java.util.Map$Entry {
+	String key
+	String value
+}
+
+class IMarker extends Semiotics {
+	long ^id
+	long creationTime
+	String ^type
+	contains Attribute[] attributes
+	container IResource resource opposite markers
+	derived String message get {
+		getString(org.eclipse.core.resources.IMarker.MESSAGE)
+	}
+	derived String location get {
+		getString(org.eclipse.core.resources.IMarker.LOCATION)
+	}
+	derived Integer charStart get {
+		getInt(org.eclipse.core.resources.IMarker.CHAR_START)
+	}
+	derived Integer charEnd get {
+		getInt(org.eclipse.core.resources.IMarker.CHAR_END)
+	}
+	derived Integer lineNumber get {
+		getInt(org.eclipse.core.resources.IMarker.LINE_NUMBER)
+	}
+	op Integer getInt(String key) {
+		if (attributes.containsKey(key))
+			return Integer.parseInt(attributes.get(key))
+		return null
+	}
+	op String getString(String key) {
+		if (attributes.containsKey(key))
+			return attributes.get(key)
+		return null
+	}
+}
+
+class IResource extends Semiotics {
+	String fullPath
+	op String getKey() {
+		return fullPath
+	}
+	contains IMarker[] markers opposite resource keys ^id
+	container IWorkspaceRoot workspaceRoot opposite members
+}
+
+// Deprecate over Root
+class IWorkspaceRoot extends Semiotics {
+	contains IResource[] members opposite workspaceRoot keys fullPath
+}
+
+// Entry Points and Sinks
+interface EntryPoint {
+}
+
+/**
+ * An entry point whose 0-index signifier is an IMarker
+ */
+class MarkerEntryPoint extends EntryPoint, Semiotics {
+}
+
+interface Sink {
+}
+
+/**
+ * A sink whose 0-index signifier is an IMarker
+ */
+class MarkerSink extends Sink, Semiotics {
+}

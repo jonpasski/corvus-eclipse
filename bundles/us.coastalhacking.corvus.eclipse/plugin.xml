@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<!-- Markers -->
+   <extension
+         id="base"
+         name="Base marker for Corvus-related tools"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.textmarker">
+      </super>
+      <super
+            type="org.eclipse.core.resources.bookmark">
+      </super>
+   </extension>
+
+   <extension
+         id="entrypoint"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="us.coastalhacking.corvus.eclipse.base">
+      </super>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.annotationTypes">
+      <type
+            markerType="us.coastalhacking.corvus.eclipse.entrypoint"
+            name="us.coastalhacking.corvus.entrypoint.annotation">
+      </type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+      <specification
+            annotationType="us.coastalhacking.corvus.entrypoint.annotation"
+            colorPreferenceKey="entryPointIndicationColor"
+            colorPreferenceValue="128,0,128"
+            contributesToHeader="true"
+            highlightPreferenceKey="entryPointIndicationHighlighting"
+            highlightPreferenceValue="false"
+            icon="icons/fugue/shadowless/door-open-in.png"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="true"
+            isGoToNextNavigationTargetKey="isEntryPointGoToNextNavigationTarget"
+            isGoToPreviousNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="isEntryPointGoToPreviousNavigationTarget"
+            label="Entry Points"
+            overviewRulerPreferenceKey="entryPointIndicationOverviewRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="4"
+            showInNextPrevDropdownToolbarAction="true"
+            showInNextPrevDropdownToolbarActionKey="showEntryPointInNextPrevDropdownToolbarAction"
+            symbolicIcon="info"
+            textPreferenceKey="entryPointIndication"
+            textPreferenceValue="true"
+            textStylePreferenceKey="entryPointTextStyle"
+            textStylePreferenceValue="DASHED_BOX"
+            verticalRulerPreferenceKey="entryPointIndicationVerticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+   </extension>
+
+ 
+   <!-- Launching -->
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            id="us.coastalhacking.corvus.launchconfiguration"
+            name="Corvus"
+            modes="run"
+            delegate="us.coastalhacking.corvus.eclipse.CorvusLaunchFactory:corvus.launch.factory.launcher">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="us.coastalhacking.corvus.eclipse.CorvusLaunchFactory:corvus.launch.factory.tabgroup"
+            id="us.coastalhacking.corvus.launchtabgroup"
+            type="us.coastalhacking.corvus.launchconfiguration">
+      </launchConfigurationTabGroup>
+   </extension>
+   
+   <!-- e4 UI Model Fragment -->
+   <extension
+         id="us.coastalhacking.corvus.eclipse.fragment"
+         point="org.eclipse.e4.workbench.model">
+      <fragment
+            uri="fragment.e4xmi">
+      </fragment>
+   </extension>
+   
+</plugin>

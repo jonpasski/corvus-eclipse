@@ -1,0 +1,15 @@
+package us.coastalhacking.corvus.test.util
+
+class TestRoot {
+	
+}
+
+class TestIds {
+	contains TestId[] testIds opposite root keys key
+}
+
+class TestId {
+	id String intrinsicId
+	String key
+	container TestIds root opposite testIds
+}

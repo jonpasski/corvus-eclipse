@@ -28,7 +28,7 @@
 	</profiles>
 
 	<modules>
-		<module>us.coastalhacking.corvus.eclipse.ui.impl.tests</module>
-		<!-- <module>us.coastalhacking.corvus.eclipse.ui.di.tests</module> -->
+		<module>us.coastalhacking.corvus.emf.provider.tests</module>
+		<module>us.coastalhacking.corvus.eclipse.provider.tests</module>
 	</modules>
 </project>

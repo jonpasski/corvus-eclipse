@@ -32,6 +32,34 @@
           key="/instance/org.eclipse.oomph.setup.ui/p2.startup.tasks">
         <value>record</value>
       </detail>
+      <detail
+          key="/instance/org.eclipse.pde.ds.annotations/validationErrorLevel">
+        <value>record</value>
+      </detail>
+      <detail
+          key="/instance/org.eclipse.pde.ds.annotations/enabled">
+        <value>record</value>
+      </detail>
+      <detail
+          key="/instance/org.eclipse.pde.ds.annotations/path">
+        <value>record</value>
+      </detail>
+      <detail
+          key="/instance/org.eclipse.pde.ds.annotations/dsVersion">
+        <value>record</value>
+      </detail>
+      <detail
+          key="/instance/org.eclipse.pde.ds.annotations/validationErrorLevel.missingImplicitUnbindMethod">
+        <value>record</value>
+      </detail>
+      <detail
+          key="/instance/org.eclipse.pde.ds.annotations/classpath">
+        <value>record</value>
+      </detail>
+      <detail
+          key="/instance/org.eclipse.pde.ds.annotations/generateBundleActivationPolicyLazy">
+        <value>record</value>
+      </detail>
     </annotation>
     <setupTask
         xsi:type="setup:CompoundTask"
@@ -44,6 +72,38 @@
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.oomph.setup.ui/showToolBarContributions"
           value="true"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="org.eclipse.pde.ds.annotations">
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.ds.annotations/classpath"
+          value="true"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.ds.annotations/dsVersion"
+          value="V1_3"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.ds.annotations/enabled"
+          value="true"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.ds.annotations/generateBundleActivationPolicyLazy"
+          value="true"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.ds.annotations/path"
+          value="OSGI-INF"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.ds.annotations/validationErrorLevel"
+          value="error"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.pde.ds.annotations/validationErrorLevel.missingImplicitUnbindMethod"
+          value="error"/>
     </setupTask>
     <setupTask
         xsi:type="setup:CompoundTask"
@@ -84,9 +144,17 @@
   <setupTask
       xsi:type="setup.p2:P2Task">
     <requirement
+        name="org.eclipse.emf.transaction.sdk.feature.group"/>
+    <requirement
         name="org.eclipse.oomph.setup.pde"/>
+    <requirement
+        name="org.eclipse.m2e.feature.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.ecore.xcore.sdk.feature.group"/>
+    <requirement
+        name="org.eclipse.releng.tools.feature.group"/>
     <repository
-        url="http://download.eclipse.org/releases/photon"/>
+        url="http://download.eclipse.org/technology/m2e/releases"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -137,17 +205,25 @@
       </annotation>
       <requirement
           name="*"/>
+      <requirement
+          name="org.eclipse.emf.transaction.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.workspace.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.ecore.xcore.feature.group"/>
+      <requirement
+          name="org.eclipse.equinox.cm"/>
       <sourceLocator
           rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
       <repositoryList
           name="Photon">
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.8"/>
-        <repository
             url="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
         <repository
             url="http://download.eclipse.org/cbi/updates/license"/>
+        <repository
+            url="http://download.eclipse.org/releases/photon"/>
       </repositoryList>
     </targlet>
   </setupTask>

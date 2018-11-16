@@ -14,8 +14,13 @@
 	</parent>
 
 	<modules>
-		<module>us.coastalhacking.corvus.eclipse.ui.api</module>
-		<module>us.coastalhacking.corvus.eclipse.ui.impl</module>
-		<module>us.coastalhacking.corvus.eclipse.resources</module>
+		<module>us.coastalhacking.corvus.semiotics</module>
+		<module>us.coastalhacking.corvus.emf</module>
+		<module>us.coastalhacking.corvus.emf.provider</module>
+		<module>us.coastalhacking.corvus.util</module>
+		<module>us.coastalhacking.corvus.util.provider</module>
+		<module>us.coastalhacking.corvus.eclipse</module>
+		<module>us.coastalhacking.corvus.eclipse.provider</module>
+		<module>us.coastalhacking.corvus.test.util</module>
 	</modules>
 </project>

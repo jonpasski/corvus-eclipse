@@ -19,4 +19,20 @@
 		<module>releng</module>
 		<module>tests</module>
 	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<!-- <systemProperties> <osgi.console>1234</osgi.console> </systemProperties> -->
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>false</useUIThread>
+					<argLine>${tycho.surefire.extra.vmargs}</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

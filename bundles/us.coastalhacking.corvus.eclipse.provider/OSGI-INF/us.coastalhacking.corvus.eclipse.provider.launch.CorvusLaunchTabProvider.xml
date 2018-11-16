@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" factory="corvus.launch.factory.tabgroup" name="us.coastalhacking.corvus.eclipse.provider.launch.CorvusLaunchTabProvider">
+   <reference cardinality="1..1" field="corvusTab" interface="org.eclipse.debug.ui.ILaunchConfigurationTab2" name="corvusTab"/>
+   <implementation class="us.coastalhacking.corvus.eclipse.provider.launch.CorvusLaunchTabProvider"/>
+</scr:component>
