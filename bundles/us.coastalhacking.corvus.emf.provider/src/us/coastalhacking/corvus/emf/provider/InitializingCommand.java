@@ -35,7 +35,6 @@ public class InitializingCommand extends RecordingCommand {
 		if (resource.getContents().isEmpty()) {
 			resource.getContents().add(root);	
 		}
-		// TODO: get XMI options and pass here via properties
 		try {
 			resource.save(null);
 		} catch (IOException e) {

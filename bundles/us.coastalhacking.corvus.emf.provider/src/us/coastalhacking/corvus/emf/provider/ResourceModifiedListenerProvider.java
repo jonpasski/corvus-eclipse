@@ -145,7 +145,6 @@ public class ResourceModifiedListenerProvider implements ResourceSetListener {
 		return new MultiRule(rules);
 	}
 
-	// TODO: re-use jobs if possible. the impls synchronize
 	public static class SaveResourceJob extends WorkspaceJob {
 
 		private final TransactionalEditingDomain domain;
@@ -170,7 +169,7 @@ public class ResourceModifiedListenerProvider implements ResourceSetListener {
 						try {
 							resource.save(options);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							// TODO log
 							e.printStackTrace();
 						}
 					});

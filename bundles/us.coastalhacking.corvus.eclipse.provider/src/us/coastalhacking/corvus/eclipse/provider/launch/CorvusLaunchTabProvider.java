@@ -13,7 +13,6 @@ import us.coastalhacking.corvus.eclipse.EclipseApi;
 @Component(factory=EclipseApi.CorvusLaunchTab.Component.FACTORY)
 public class CorvusLaunchTabProvider extends AbstractLaunchConfigurationTabGroup {
 
-	// FIXME: target
 	@Reference
 	ILaunchConfigurationTab2 corvusTab;
 	

@@ -93,7 +93,6 @@ public class MarkerToEntryPointProvider extends TriggerListener {
 	}
 
 	Command addViaMarkers(TransactionalEditingDomain domain, URI uri, Collection<IMarker> markers) {
-		// TODO: ensure resource caching is enabled
 		final Resource epResource = domain.getResourceSet().getResource(uri, true);
 		final Root root = (Root) epResource.getContents().get(0);
 		final CompoundCommand result = new CompoundCommand();
@@ -107,7 +106,6 @@ public class MarkerToEntryPointProvider extends TriggerListener {
 	}
 	
 	Command removeViaMarkers(TransactionalEditingDomain domain, URI uri, Collection<IMarker> markers) {
-		// TODO: ensure resource caching is enabled
 		final Resource resource = domain.getResourceSet().getResource(uri, true);
 		final Root root = (Root) resource.getContents().get(0);
 		final CompoundCommand result = new CompoundCommand();

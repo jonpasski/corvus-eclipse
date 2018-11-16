@@ -63,8 +63,6 @@ public class EclipseResourcesChangeListenerProvider implements IResourceChangeLi
 		workspace.removeResourceChangeListener(this);
 	}
 
-	// TODO: process IResource changes in addition to the already processed IMarker
-	// changes
 	@Override
 	public void resourceChanged(IResourceChangeEvent event) {
 		if (event.getType() != IResourceChangeEvent.POST_CHANGE) {
@@ -201,8 +199,6 @@ public class EclipseResourcesChangeListenerProvider implements IResourceChangeLi
 		}
 	}
 
-	// TODO: refactor to remove explicit resource params if possible via
-	// .eResource()
 	void changed(IMarkerDelta delta, Optional<IMarker> maybeMarker) {
 		if (maybeMarker.isPresent()) {
 			IMarker existingMarker = maybeMarker.get();

@@ -26,7 +26,6 @@ class CorvusTransactionalRegistryProviderTest extends AbstractProjectTest {
 		super();
 	}
 
-	// TODO: copypasta'd code from the sibling factory test
 	@Test
 	void shouldConfigure() throws Exception {
 

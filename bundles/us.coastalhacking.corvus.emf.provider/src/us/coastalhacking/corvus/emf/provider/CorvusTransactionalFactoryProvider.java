@@ -48,7 +48,6 @@ public class CorvusTransactionalFactoryProvider extends WorkspaceEditingDomainFa
 	@Override
 	public synchronized TransactionalEditingDomain createEditingDomain() {
 		TransactionalEditingDomain domain = super.createEditingDomain();
-		// FIXME: whiteboard TED instead of below	
 		for (ResourceInitializer ri : initializers) {
 			final URI logical = URI.createURI(ri.getLogical());
 			final URI physical = projectUri.appendSegment(ri.getPhysical()); 

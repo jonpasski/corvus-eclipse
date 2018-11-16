@@ -34,7 +34,7 @@ public class CommandEventHandler implements EventHandler {
 				throw new UnsupportedOperationException("Invalid topic: " + event.getTopic());			
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// TODO log
 			e.printStackTrace();
 			return;
 		}

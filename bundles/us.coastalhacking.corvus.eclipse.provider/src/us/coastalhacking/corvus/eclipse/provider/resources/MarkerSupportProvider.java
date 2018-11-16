@@ -54,7 +54,7 @@ public class MarkerSupportProvider implements MarkerSupport {
 	public Future<Void> createMarker(Coordinate coordinate, String resourceFullPath, String markerType) {
 
 		final CompletableFuture<Void> future = new CompletableFuture<>();
-		// TODO: add a logging callback to the future via thenAccept
+		// TODO: log by adding a logging callback to the future via thenAccept
 		future.exceptionally(ex -> {
 			ex.printStackTrace();
 			return null;

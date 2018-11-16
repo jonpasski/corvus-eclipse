@@ -37,7 +37,6 @@ public class CorvusAppFactoryProvider {
 		helper.target(newProps, Arrays.stream(targets).sequential(),
 				EmfApi.TransactionalEditingDomain.Properties.ID, transactionId);
 
-		// FIXME: make dynamic
 		// Ordered
 		String[] pids = { EmfApi.CorvusTransactionalFactory.Component.CONFIG_PID,
 				EmfApi.CorvusTransactionalRegistry.Component.CONFIG_PID,
@@ -60,7 +59,7 @@ public class CorvusAppFactoryProvider {
 			try {
 				helper.configure(pid, props, configurations);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				// TODO log
 				e.printStackTrace();
 			}
 		});

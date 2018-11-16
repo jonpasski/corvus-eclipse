@@ -260,8 +260,6 @@
       vm="true">
     <description>Set an Oomph redirection system property to redirect the logical location of this setup to its physical location in the Git clone.</description>
   </setupTask>
-  <stream name="oomph"
-      label="oomph"/>
   <stream name="master"
       label="master"/>
   <logicalProjectContainer

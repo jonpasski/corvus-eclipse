@@ -11,7 +11,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.osgi.framework.FrameworkUtil;
 
 public class AbstractProjectTest extends AbstractCMTest {
 
@@ -21,18 +20,11 @@ public class AbstractProjectTest extends AbstractCMTest {
 
 	protected IWorkspace workspace;
 	protected IProject project;
-//
-//	@BeforeAll
-//	protected static void beforeAll() throws Exception {
-//		
-//		workspace = TestUtils.getService(FrameworkUtil.getBundle(AbstractProjectTest.class).getBundleContext(), IWorkspace.class, 200);
-//		assertNotNull(workspace);
-//	}
-	
+
 	@BeforeEach
 	protected void beforeEach() throws Exception {
-		super.beforeEach();
-		workspace = TestUtils.getService(FrameworkUtil.getBundle(AbstractProjectTest.class).getBundleContext(), IWorkspace.class, 200);
+		super.beforeEach();		
+		workspace = serviceTrackerHelper(IWorkspace.class);
 		assertNotNull(workspace);
 		project = workspace.getRoot().getProject(getClass().getName());
 		project.create(null);

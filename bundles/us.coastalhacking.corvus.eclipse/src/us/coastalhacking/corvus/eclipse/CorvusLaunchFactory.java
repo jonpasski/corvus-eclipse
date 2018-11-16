@@ -27,8 +27,6 @@ public class CorvusLaunchFactory implements IExecutableExtensionFactory, IExecut
 	private Object data;
 	private Map<String, Object> props;
 	private static final String CORVUS_TIMESTAMP = "corvus.timestamp";
-	// FIXME: stop leaking service references maybe an event listener via the
-	// activator that receives messages at launcher deactivations?
 	private Map<String, ServiceReference<ComponentFactory>> factoryRefs = new HashMap<>();
 
 	public CorvusLaunchFactory() {
@@ -38,7 +36,6 @@ public class CorvusLaunchFactory implements IExecutableExtensionFactory, IExecut
 	@Override
 	public void setInitializationData(IConfigurationElement config, String propertyName, Object data)
 			throws CoreException {
-		// TODO: config to properties
 		this.data = data;
 		this.props = toProps(config, propertyName, data);
 	}

@@ -1,9 +1,6 @@
 package us.coastalhacking.corvus.eclipse.provider.launch;
 
-import java.nio.file.Paths;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -67,7 +64,7 @@ public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 				}
 			}
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
+			// TODO log
 			e.printStackTrace();
 		}
 
@@ -78,19 +75,7 @@ public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 		if (!projectText.getText().isEmpty()) {
 			final String projectName = projectText.getText();
 			configuration.setAttribute(EmfApi.ResourceInitializer.Properties.PROJECT, projectName);
-
-			// TODO: replace me with osgi goodness 
-			final Map<String, String> initializers = new HashMap<>();
-			setInitializer(initializers, projectName, configuration);
 		}
-	}
-	
-	private void setInitializer(Map<String, String> initializers, String projectName, ILaunchConfigurationWorkingCopy configuration) {
-		initializers.entrySet().stream().forEach(es -> {
-			// TODO: use core resources/runtime here...
-			java.nio.file.Path path = Paths.get(projectName, es.getKey());
-			configuration.setAttribute(es.getValue(), path.toAbsolutePath().toString());			
-		});		
 	}
 
 	@Override

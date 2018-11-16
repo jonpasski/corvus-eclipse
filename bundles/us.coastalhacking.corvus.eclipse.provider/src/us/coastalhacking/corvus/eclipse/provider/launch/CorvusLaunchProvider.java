@@ -36,8 +36,6 @@ public class CorvusLaunchProvider extends LaunchConfigurationDelegate {
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
 			throws CoreException {
-		// FIXME: leaking instances; consider saving instance, adding event listener
-		// and then dispose when process terminates, via an event admin event
 		Hashtable<String, Object> newProps = new Hashtable<>(props);
 		newProps.putAll(configuration.getAttributes());
 

@@ -20,7 +20,6 @@ import us.coastalhacking.corvus.eclipse.EclipseApi;
 import us.coastalhacking.corvus.emf.EmfApi;
 import us.coastalhacking.corvus.emf.ResourceInitializer;
 import us.coastalhacking.corvus.test.util.AbstractProjectTest;
-import us.coastalhacking.corvus.test.util.TestUtils;
 
 class CorvusAppProviderTest extends AbstractProjectTest {
 
@@ -38,8 +37,9 @@ class CorvusAppProviderTest extends AbstractProjectTest {
 		props.put(EmfApi.TransactionalEditingDomain.Properties.ID, transactionId);
 
 		// Get factory
-		ComponentFactory appFactory = TestUtils.getService(getBundleContext(), ComponentFactory.class, 1250,
-				String.format("(%s=%s)", ComponentConstants.COMPONENT_FACTORY, EclipseApi.CorvusApp.Component.FACTORY));
+		Map<String, Object> filterProps = new HashMap<>();
+		filterProps.put(ComponentConstants.COMPONENT_FACTORY, EclipseApi.CorvusApp.Component.FACTORY);
+		ComponentFactory appFactory = (ComponentFactory) serviceTrackerHelper(filterProps);
 		assertNotNull(appFactory);
 		ComponentInstance instance = appFactory.newInstance(props);
 		Object service = instance.getInstance();
@@ -53,10 +53,11 @@ class CorvusAppProviderTest extends AbstractProjectTest {
 		found.put(Registry.class, false);
 		found.put(IResourceChangeListener.class, false);
 
-		String filter = String.format("(%s=%s)", EmfApi.TransactionalEditingDomain.Properties.ID, transactionId);
+		Map<String, Object> transIdFilter = new HashMap<>();
+		transIdFilter.put(EmfApi.TransactionalEditingDomain.Properties.ID, transactionId);
 		found.keySet().forEach(clz -> {
 			try {
-				Object svc = TestUtils.getService(getBundleContext(), clz, 250, filter);
+				Object svc = serviceTrackerHelper(transIdFilter);
 				assertNotNull(svc);
 				found.put(clz, true);
 			} catch (Exception e) {

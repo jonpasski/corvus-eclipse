@@ -164,7 +164,6 @@ class MarkerToEntryPointProviderTest extends AbstractProjectTest {
 
 	}
 
-	// TODO: move wrappers to test util
 	CommandWrapper wrapCommand(Command command) {
 		return new CommandWrapper(command) {
 			@Override

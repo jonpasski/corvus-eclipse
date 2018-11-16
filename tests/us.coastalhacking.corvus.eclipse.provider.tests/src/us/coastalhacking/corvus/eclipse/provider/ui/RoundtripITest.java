@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
 
 import us.coastalhacking.corvus.eclipse.EclipseApi;
 import us.coastalhacking.corvus.test.util.AbstractProjectTest;
-import us.coastalhacking.corvus.test.util.TestUtils;
 
 @SuppressWarnings("restriction")
 class RoundtripITest extends AbstractProjectTest {
@@ -50,7 +49,7 @@ class RoundtripITest extends AbstractProjectTest {
 
 	@BeforeEach
 	void beforeSubEach() throws Exception {
-		workbench = TestUtils.getService(getBundleContext(), IWorkbench.class, 500);
+		workbench = serviceTrackerHelper(IWorkbench.class);
 		assertNotNull(workbench);
 		eclipseContext = workbench.getApplication().getContext();
 		workbench3 = eclipseContext.get(org.eclipse.ui.IWorkbench.class);
