@@ -30,5 +30,6 @@
 	<modules>
 		<module>us.coastalhacking.corvus.emf.provider.tests</module>
 		<module>us.coastalhacking.corvus.eclipse.provider.tests</module>
+		<module>us.coastalhacking.corvus.semiotics.editor.provider.tests</module>
 	</modules>
 </project>

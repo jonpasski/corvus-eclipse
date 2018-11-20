@@ -14,13 +14,16 @@
 	</parent>
 
 	<modules>
-		<module>us.coastalhacking.corvus.semiotics</module>
 		<module>us.coastalhacking.corvus.emf</module>
 		<module>us.coastalhacking.corvus.emf.provider</module>
+		<module>us.coastalhacking.corvus.semiotics</module>
+		<module>us.coastalhacking.corvus.semiotics.editor</module>
+		<module>us.coastalhacking.corvus.semiotics.editor.provider</module>
 		<module>us.coastalhacking.corvus.util</module>
 		<module>us.coastalhacking.corvus.util.provider</module>
 		<module>us.coastalhacking.corvus.eclipse</module>
 		<module>us.coastalhacking.corvus.eclipse.provider</module>
 		<module>us.coastalhacking.corvus.test.util</module>
+		<module>us.coastalhacking.corvus.eclipse.test.util</module>
 	</modules>
 </project>

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see us.coastalhacking.corvus.semiotics.SemioticsFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/emf/2002/GenModel childCreationExtenders='true' editDirectory='/us.coastalhacking.corvus.semiotics/src-gen' providerPackageSuffix='edit' modelPluginVariables='org.eclipse.xtext.xbase.lib org.eclipse.emf.ecore.xcore.lib org.eclipse.core.resources' presentationPackageSuffix='editor' basePackage='us.coastalhacking.corvus'"
+ *        annotation="http://www.eclipse.org/emf/2002/GenModel childCreationExtenders='true' editDirectory='/us.coastalhacking.corvus.semiotics/src-gen' editorDirectory='/us.coastalhacking.corvus.semiotics.editor/src-gen' providerPackageSuffix='edit' modelPluginVariables='org.eclipse.xtext.xbase.lib org.eclipse.emf.ecore.xcore.lib org.eclipse.core.resources' presentationPackageSuffix='editor' editorPluginVariables='us.coastalhacking.corvus.util' basePackage='us.coastalhacking.corvus'"
  * @generated
  */
 public interface SemioticsPackage extends EPackage {

@@ -21,6 +21,7 @@ import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
 
+@Deprecated
 public class CorvusLaunchFactory implements IExecutableExtensionFactory, IExecutableExtension {
 
 	private BundleContext context;

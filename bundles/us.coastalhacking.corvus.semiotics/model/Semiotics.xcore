@@ -1,8 +1,8 @@
 @GenModel(childCreationExtenders="true", editDirectory="/us.coastalhacking.corvus.semiotics/src-gen",
-//	editorDirectory="/us.coastalhacking.corvus.eclipse.editor/src-gen",
+	editorDirectory="/us.coastalhacking.corvus.semiotics.editor/src-gen",
 	providerPackageSuffix="edit",
 	modelPluginVariables="org.eclipse.xtext.xbase.lib org.eclipse.emf.ecore.xcore.lib org.eclipse.core.resources",
-	presentationPackageSuffix="editor")
+	presentationPackageSuffix="editor", editorPluginVariables="us.coastalhacking.corvus.util")
 @Ecore(nsURI="https://model.coastalhacking.us/corvus/semiotics/0.1")
 package us.coastalhacking.corvus.semiotics
 

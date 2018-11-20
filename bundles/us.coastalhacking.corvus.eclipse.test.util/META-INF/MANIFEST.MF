@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Corvus Eclipse Test Util
+Bundle-SymbolicName: us.coastalhacking.corvus.eclipse.test.util
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Coastal Hacking
+Automatic-Module-Name: us.coastalhacking.corvus.eclipse.test.util
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.osgi.service.component.annotations;version="1.3.0"
+Service-Component: OSGI-INF/us.coastalhacking.corvus.eclipse.test.util.ProjectProvider.xml
+Bundle-ActivationPolicy: lazy

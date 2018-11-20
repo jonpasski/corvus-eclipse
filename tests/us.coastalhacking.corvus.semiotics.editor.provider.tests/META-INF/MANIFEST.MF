@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Corvus Semiotics Provider Tests
+Bundle-SymbolicName: us.coastalhacking.corvus.semiotics.editor.provider.tests
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Coastal Hacking
+Fragment-Host: us.coastalhacking.corvus.semiotics.editor.provider;bundle-version="0.1.0"
+Automatic-Module-Name: us.coastalhacking.corvus.semiotics.provider.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.eclipse.e4.ui.di,
+ org.eclipse.jface.viewers,
+ org.junit;version="4.12.0",
+ org.junit.jupiter.api,
+ org.junit.jupiter.api.function,
+ org.junit.platform.commons,
+ org.junit.rules,
+ org.mockito,
+ org.mockito.invocation,
+ org.mockito.stubbing,
+ us.coastalhacking.corvus.test.util
+Require-Bundle: us.coastalhacking.corvus.emf.provider

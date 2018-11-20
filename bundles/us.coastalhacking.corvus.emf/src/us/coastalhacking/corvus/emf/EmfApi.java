@@ -11,20 +11,21 @@ public interface EmfApi {
 		interface Properties {
 			String LOGICAL = "corvus.emf.initializer.logical";
 			String PHYSICAL = "corvus.emf.initializer.physical";
+			@Deprecated
 			String PROJECT = "corvus.emf.initializer.project";
 		}
 		
 		interface EclipseResources {
 			interface Properties {
 				String LOGICAL = "corvus:eclipse";
-				String PHYSICAL = "eclipse.corvus";
+				String PHYSICAL = "eclipse.semiotics";
 			}
 		}
 		
 		interface EntryPoint {
 			interface Properties {
 				String LOGICAL = "corvus:entrypoint";
-				String PHYSICAL = "entrypoint.corvus";
+				String PHYSICAL = "entrypoint.semiotics";
 			}
 		}
 	}
@@ -38,7 +39,7 @@ public interface EmfApi {
 			String INITIALIZERS = "corvus.emf.factory.initializers";
 		}
 	}
-
+	
 	interface CorvusTransactionalRegistry {
 		interface Component {
 			String CONFIG_PID = "corvus.emf.registry";
@@ -56,6 +57,7 @@ public interface EmfApi {
 		}
 
 		interface Reference {
+			@Deprecated
 			String REGISTRY = "corvus.emf.resourcemodified.registry";
 		}
 	}

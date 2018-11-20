@@ -40,7 +40,7 @@ public class CorvusAppFactoryProvider {
 		// Ordered
 		String[] pids = { EmfApi.CorvusTransactionalFactory.Component.CONFIG_PID,
 				EmfApi.CorvusTransactionalRegistry.Component.CONFIG_PID,
-				EmfApi.ResourceModifiedListener.Component.CONFIG_PID,
+				//EmfApi.ResourceModifiedListener.Component.CONFIG_PID,
 				EclipseApi.IResourceChangeListener.Component.CONFIG_PID,
 				EclipseApi.TriggerListener.EntryPoint.Component.CONFIG_PID};
 		configurePids(helper, pids, newProps, configurations);

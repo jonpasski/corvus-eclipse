@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated Semiotics -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="us.coastalhacking.corvus.semiotics.editor.SemioticsModelWizardID"
+            name="%_UI_SemioticsModelWizard_label"
+            class="us.coastalhacking.corvus.semiotics.editor.SemioticsModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/SemioticsModelFile.gif">
+         <description>%_UI_SemioticsModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated Semiotics -->
+      <editor
+            id="us.coastalhacking.corvus.semiotics.editor.SemioticsEditorID"
+            name="%_UI_SemioticsEditor_label"
+            icon="icons/full/obj16/SemioticsModelFile.gif"
+            extensions="semiotics"
+            class="us.coastalhacking.corvus.util.OsgiExtensionFactory:us.coastalhacking.corvus.semiotics.editor.SemioticsEditor"
+            contributorClass="us.coastalhacking.corvus.semiotics.editor.SemioticsActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

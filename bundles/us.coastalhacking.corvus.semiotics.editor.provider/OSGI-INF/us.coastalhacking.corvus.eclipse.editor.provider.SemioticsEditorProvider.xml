@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" activate="activate" factory="us.coastalhacking.corvus.semiotics.editor.SemioticsEditor" name="us.coastalhacking.corvus.eclipse.editor.provider.SemioticsEditorProvider">
+   <reference cardinality="1..1" field="registry" interface="org.eclipse.emf.transaction.TransactionalEditingDomain$Registry" name="corvus.emf.registry"/>
+   <reference cardinality="1..1" field="workbench" interface="org.eclipse.e4.ui.workbench.IWorkbench" name="workbench"/>
+   <implementation class="us.coastalhacking.corvus.eclipse.editor.provider.SemioticsEditorProvider"/>
+</scr:component>

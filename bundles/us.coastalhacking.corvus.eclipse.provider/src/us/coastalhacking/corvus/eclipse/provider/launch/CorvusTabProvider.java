@@ -1,7 +1,5 @@
 package us.coastalhacking.corvus.eclipse.provider.launch;
 
-import java.time.Instant;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.CoreException;
@@ -9,6 +7,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchConfigurationTab2;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -45,9 +44,6 @@ public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		// called once
-		String transactionId = String.format("corvus.transaction.%s", Instant.now().toEpochMilli());
-		configuration.rename(transactionId);
-		configuration.setAttribute(EmfApi.TransactionalEditingDomain.Properties.ID, transactionId);
 		configuration.setAttribute(EclipseApi.IResourceChangeListener.Properties.MARKER_TYPE, EclipseApi.Marker.BASE_MARKER);
 	}
 
@@ -74,6 +70,9 @@ public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
 		if (!projectText.getText().isEmpty()) {
 			final String projectName = projectText.getText();
+			String id = URI.encodeSegment(projectName, true);
+			configuration.rename(id);
+			configuration.setAttribute(EmfApi.TransactionalEditingDomain.Properties.ID, id);
 			configuration.setAttribute(EmfApi.ResourceInitializer.Properties.PROJECT, projectName);
 		}
 	}
