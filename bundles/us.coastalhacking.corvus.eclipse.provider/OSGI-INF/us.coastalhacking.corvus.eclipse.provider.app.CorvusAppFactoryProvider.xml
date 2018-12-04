@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" activate="activate" deactivate="deactivate" factory="corvus.eclipse.app.factory" name="us.coastalhacking.corvus.eclipse.provider.app.CorvusAppFactoryProvider">
    <reference cardinality="1..1" field="helper" interface="us.coastalhacking.corvus.util.ConfigurationAdminHelper" name="helper"/>
+   <reference cardinality="1..1" field="idUtil" interface="us.coastalhacking.corvus.emf.TransactionIdUtil" name="idUtil"/>
    <implementation class="us.coastalhacking.corvus.eclipse.provider.app.CorvusAppFactoryProvider"/>
 </scr:component>

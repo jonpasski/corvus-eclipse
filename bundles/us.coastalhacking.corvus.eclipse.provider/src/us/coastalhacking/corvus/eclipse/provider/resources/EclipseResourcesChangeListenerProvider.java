@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.TransactionalEditingDomain.Registry;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -36,7 +36,6 @@ import us.coastalhacking.corvus.semiotics.SemioticsFactory;
 public class EclipseResourcesChangeListenerProvider implements IResourceChangeListener {
 
 	private String markerType;
-	private TransactionalEditingDomain domain;
 	private URI uri;
 	private SemioticsFactory factory = SemioticsFactory.eINSTANCE;
 	static final String UNCONTAINED = "/-1";
@@ -45,14 +44,12 @@ public class EclipseResourcesChangeListenerProvider implements IResourceChangeLi
 	@Reference
 	IWorkspace workspace;
 
-	@Reference(name = EclipseApi.IResourceChangeListener.Reference.REGISTRY)
-	Registry registry;
+	@Reference(name = EmfApi.IEditingDomainProvider.Reference.NAME)
+	IEditingDomainProvider domainProvider;
 
 	@Activate
 	void activate(Map<String, Object> props) {
 		String markerType = (String) props.get(EclipseApi.IResourceChangeListener.Properties.MARKER_TYPE);
-		String transactionId = (String) props.get(EmfApi.TransactionalEditingDomain.Properties.ID);
-		domain = registry.getEditingDomain(transactionId);
 		workspace.addResourceChangeListener(this);
 		this.markerType = markerType;
 		this.uri = URI.createURI(EmfApi.ResourceInitializer.EclipseResources.Properties.LOGICAL);
@@ -77,14 +74,16 @@ public class EclipseResourcesChangeListenerProvider implements IResourceChangeLi
 		// Do not attempt to save the resource within a change event
 		// else you get the hose again via an exception with message:
 		// "The resource tree is locked for modifications."
-		final RecordingCommand command = new RecordingCommand(domain, "Marker change", "Marker change") {
+		// TODO: convert from recording command to normal commands & execute on stack
+		TransactionalEditingDomain transactionalDomain = (TransactionalEditingDomain)domainProvider.getEditingDomain();
+		final RecordingCommand command = new RecordingCommand(transactionalDomain, "Marker change", "Marker change") {
 			@Override
 			protected void doExecute() {
-				final Resource existingResource = domain.getResourceSet().getResource(uri, true);
+				final Resource existingResource = domainProvider.getEditingDomain().getResourceSet().getResource(uri, true);
 				processIMarkerDeltas(deltas, factory, existingResource);
 			}
 		};
-		domain.getCommandStack().execute(command);
+		domainProvider.getEditingDomain().getCommandStack().execute(command);
 	}
 
 	void processIMarkerDeltas(IMarkerDelta[] deltas, SemioticsFactory factory, Resource existingResource) {

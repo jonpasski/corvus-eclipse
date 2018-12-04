@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -19,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.rules.TemporaryFolder;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
@@ -29,6 +32,8 @@ import org.osgi.util.tracker.ServiceTracker;
 
 public abstract class AbstractCMTest {
 
+	protected final static Logger LOGGER = Logger.getLogger(AbstractCMTest.class.getName());
+	
 	private BundleContext context;
 
 	private ConfigurationAdmin configAdmin;
@@ -56,7 +61,6 @@ public abstract class AbstractCMTest {
 		// Register our per-test listener
 		serviceRegistrations.add(getBundleContext().registerService(org.osgi.service.cm.ConfigurationListener.class,
 				new TestCaseConfigurationListener(), null));
-
 	}
 
 	@AfterEach
@@ -66,7 +70,6 @@ public abstract class AbstractCMTest {
 			try {
 				c.delete();
 			} catch (Exception e) {
-
 				e.printStackTrace();
 			}
 		});
@@ -74,7 +77,7 @@ public abstract class AbstractCMTest {
 		CompletableFuture<Void> combinedFuture = CompletableFuture
 				.allOf(configurationFutures.values().stream().toArray(CompletableFuture[]::new));
 		// block until all the configurations are deleted
-		combinedFuture.get();
+		combinedFuture.get(timeout, TimeUnit.MILLISECONDS);
 		configurations.clear();
 
 		// Then delete the registrations. Reversing these results in the configuration
@@ -105,7 +108,10 @@ public abstract class AbstractCMTest {
 	protected <T> T serviceTrackerHelper(ServiceTracker<?, T> st, long timeout) throws Exception {
 		serviceTrackers.add(st);
 		st.open();
-		return st.waitForService(timeout);
+		// TODO: log
+		T service = st.waitForService(timeout);
+		assertNotNull(service);
+		return service;
 	}
 
 	protected String toFilterWithPid(String servicePid, Map<String, Object> props) {
@@ -173,22 +179,29 @@ public abstract class AbstractCMTest {
 		assertNotNull(getConfigAdmin());
 		// Create the configuration
 		final Configuration configuration = getConfigAdmin().createFactoryConfiguration(factoryPid, "?");
+		// TODO: log
+
 		configurations.add(configuration);
 		configurationFutures.put(configuration.getPid(), new CompletableFuture<>());
 		// Updating it with the passed-in properties
 		configuration.update(new Hashtable<>(props));
 		// Strictly return the specific service, ensuring the desired properties are
 		// also present
-		final String filter = toFilterWithPid(configuration.getPid(), props);
-		return serviceTrackerHelper(
-				new ServiceTracker<>(getBundleContext(), getBundleContext().createFilter(filter), null), timeout);
+
+		final String toFilter = toFilterWithPid(configuration.getPid(), props);
+		final Filter filter = getBundleContext().createFilter(toFilter);
+		final ServiceTracker<S, S> tracker = new ServiceTracker<>(getBundleContext(), filter, null);
+
+		S service = serviceTrackerHelper(tracker, timeout);
+
+		return service;
 	}
 
 	protected class TestCaseConfigurationListener implements ConfigurationListener {
 
 		@Override
 		public void configurationEvent(ConfigurationEvent event) {
-			if (event.getType() == ConfigurationEvent.CM_DELETED) {
+			if (event.getType() == ConfigurationEvent.CM_DELETED && configurationFutures.containsKey(event.getPid())) {
 				configurationFutures.get(event.getPid()).complete(null);
 			}
 		}
@@ -222,5 +235,10 @@ public abstract class AbstractCMTest {
 					timeout);
 		}
 		return configAdmin;
+	}
+	
+	protected <T> void registerService(Class<T> serviceInterface, T service, Map<String, Object> props) {
+		serviceRegistrations.add(getBundleContext().registerService(serviceInterface,
+				service, new Hashtable<>(props)));
 	}
 }

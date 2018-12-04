@@ -18,7 +18,7 @@ public abstract class BaseResourceInitializer implements ResourceInitializer {
 	}
 
 	@Override
-	public String getPhysical() {
+	public String getFilename() {
 		return physical;
 	}
 

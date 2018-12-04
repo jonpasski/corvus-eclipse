@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import us.coastalhacking.corvus.test.util.TestId;
 import us.coastalhacking.corvus.test.util.TestIds;
+import us.coastalhacking.corvus.test.util.TestReference;
 import us.coastalhacking.corvus.test.util.TestRoot;
 import us.coastalhacking.corvus.test.util.UtilFactory;
 import us.coastalhacking.corvus.test.util.UtilPackage;
@@ -43,6 +44,13 @@ public class UtilPackageImpl extends EPackageImpl implements UtilPackage {
 	 * @generated
 	 */
 	private EClass testIdEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass testReferenceEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -122,6 +130,24 @@ public class UtilPackageImpl extends EPackageImpl implements UtilPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTestRoot_TestIds() {
+		return (EReference)testRootEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTestRoot_TestReferences() {
+		return (EReference)testRootEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTestIds() {
 		return testIdsEClass;
 	}
@@ -133,6 +159,15 @@ public class UtilPackageImpl extends EPackageImpl implements UtilPackage {
 	 */
 	public EReference getTestIds_TestIds() {
 		return (EReference)testIdsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTestIds_Root() {
+		return (EReference)testIdsEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -176,6 +211,42 @@ public class UtilPackageImpl extends EPackageImpl implements UtilPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTestId_TestReference() {
+		return (EReference)testIdEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTestReference() {
+		return testReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTestReference_Root() {
+		return (EReference)testReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTestReference_TestId() {
+		return (EReference)testReferenceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public UtilFactory getUtilFactory() {
 		return (UtilFactory)getEFactoryInstance();
 	}
@@ -200,14 +271,22 @@ public class UtilPackageImpl extends EPackageImpl implements UtilPackage {
 
 		// Create classes and their features
 		testRootEClass = createEClass(TEST_ROOT);
+		createEReference(testRootEClass, TEST_ROOT__TEST_IDS);
+		createEReference(testRootEClass, TEST_ROOT__TEST_REFERENCES);
 
 		testIdsEClass = createEClass(TEST_IDS);
 		createEReference(testIdsEClass, TEST_IDS__TEST_IDS);
+		createEReference(testIdsEClass, TEST_IDS__ROOT);
 
 		testIdEClass = createEClass(TEST_ID);
 		createEAttribute(testIdEClass, TEST_ID__INTRINSIC_ID);
 		createEAttribute(testIdEClass, TEST_ID__KEY);
 		createEReference(testIdEClass, TEST_ID__ROOT);
+		createEReference(testIdEClass, TEST_ID__TEST_REFERENCE);
+
+		testReferenceEClass = createEClass(TEST_REFERENCE);
+		createEReference(testReferenceEClass, TEST_REFERENCE__ROOT);
+		createEReference(testReferenceEClass, TEST_REFERENCE__TEST_ID);
 	}
 
 	/**
@@ -244,15 +323,23 @@ public class UtilPackageImpl extends EPackageImpl implements UtilPackage {
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(testRootEClass, TestRoot.class, "TestRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTestRoot_TestIds(), this.getTestIds(), this.getTestIds_Root(), "testIds", null, 0, -1, TestRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTestRoot_TestReferences(), this.getTestReference(), this.getTestReference_Root(), "testReferences", null, 0, -1, TestRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(testIdsEClass, TestIds.class, "TestIds", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTestIds_TestIds(), this.getTestId(), this.getTestId_Root(), "testIds", null, 0, -1, TestIds.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getTestIds_TestIds().getEKeys().add(this.getTestId_Key());
+		initEReference(getTestIds_Root(), this.getTestRoot(), this.getTestRoot_TestIds(), "root", null, 0, 1, TestIds.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(testIdEClass, TestId.class, "TestId", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTestId_IntrinsicId(), theEcorePackage.getEString(), "intrinsicId", null, 0, 1, TestId.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTestId_Key(), theEcorePackage.getEString(), "key", null, 0, 1, TestId.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTestId_Root(), this.getTestIds(), this.getTestIds_TestIds(), "root", null, 0, 1, TestId.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTestId_TestReference(), this.getTestReference(), this.getTestReference_TestId(), "testReference", null, 0, 1, TestId.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(testReferenceEClass, TestReference.class, "TestReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTestReference_Root(), this.getTestRoot(), this.getTestRoot_TestReferences(), "root", null, 0, 1, TestReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTestReference_TestId(), this.getTestId(), this.getTestId_TestReference(), "testId", null, 0, 1, TestReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

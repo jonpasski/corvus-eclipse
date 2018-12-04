@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see us.coastalhacking.corvus.test.util.UtilFactory
  * @model kind="package"
- *        annotation="http://www.eclipse.org/emf/2002/GenModel basePackage='us.coastalhacking.corvus.test'"
+ *        annotation="http://www.eclipse.org/emf/2002/GenModel childCreationExtenders='true' editDirectory='/us.coastalhacking.corvus.test.util/src-gen' modelPluginVariables='org.eclipse.xtext.xbase.lib org.eclipse.emf.ecore.xcore.lib org.eclipse.core.resources' basePackage='us.coastalhacking.corvus.test'"
  * @generated
  */
 public interface UtilPackage extends EPackage {
@@ -68,13 +68,31 @@ public interface UtilPackage extends EPackage {
 	int TEST_ROOT = 0;
 
 	/**
+	 * The feature id for the '<em><b>Test Ids</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEST_ROOT__TEST_IDS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Test References</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEST_ROOT__TEST_REFERENCES = 1;
+
+	/**
 	 * The number of structural features of the '<em>Test Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TEST_ROOT_FEATURE_COUNT = 0;
+	int TEST_ROOT_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Test Root</em>' class.
@@ -105,13 +123,22 @@ public interface UtilPackage extends EPackage {
 	int TEST_IDS__TEST_IDS = 0;
 
 	/**
+	 * The feature id for the '<em><b>Root</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEST_IDS__ROOT = 1;
+
+	/**
 	 * The number of structural features of the '<em>Test Ids</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TEST_IDS_FEATURE_COUNT = 1;
+	int TEST_IDS_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Test Ids</em>' class.
@@ -160,13 +187,22 @@ public interface UtilPackage extends EPackage {
 	int TEST_ID__ROOT = 2;
 
 	/**
+	 * The feature id for the '<em><b>Test Reference</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEST_ID__TEST_REFERENCE = 3;
+
+	/**
 	 * The number of structural features of the '<em>Test Id</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TEST_ID_FEATURE_COUNT = 3;
+	int TEST_ID_FEATURE_COUNT = 4;
 
 	/**
 	 * The number of operations of the '<em>Test Id</em>' class.
@@ -176,6 +212,52 @@ public interface UtilPackage extends EPackage {
 	 * @ordered
 	 */
 	int TEST_ID_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link us.coastalhacking.corvus.test.util.impl.TestReferenceImpl <em>Test Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see us.coastalhacking.corvus.test.util.impl.TestReferenceImpl
+	 * @see us.coastalhacking.corvus.test.util.impl.UtilPackageImpl#getTestReference()
+	 * @generated
+	 */
+	int TEST_REFERENCE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Root</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEST_REFERENCE__ROOT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Test Id</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEST_REFERENCE__TEST_ID = 1;
+
+	/**
+	 * The number of structural features of the '<em>Test Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEST_REFERENCE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Test Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEST_REFERENCE_OPERATION_COUNT = 0;
 
 
 	/**
@@ -187,6 +269,28 @@ public interface UtilPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getTestRoot();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link us.coastalhacking.corvus.test.util.TestRoot#getTestIds <em>Test Ids</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Test Ids</em>'.
+	 * @see us.coastalhacking.corvus.test.util.TestRoot#getTestIds()
+	 * @see #getTestRoot()
+	 * @generated
+	 */
+	EReference getTestRoot_TestIds();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link us.coastalhacking.corvus.test.util.TestRoot#getTestReferences <em>Test References</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Test References</em>'.
+	 * @see us.coastalhacking.corvus.test.util.TestRoot#getTestReferences()
+	 * @see #getTestRoot()
+	 * @generated
+	 */
+	EReference getTestRoot_TestReferences();
 
 	/**
 	 * Returns the meta object for class '{@link us.coastalhacking.corvus.test.util.TestIds <em>Test Ids</em>}'.
@@ -208,6 +312,17 @@ public interface UtilPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTestIds_TestIds();
+
+	/**
+	 * Returns the meta object for the container reference '{@link us.coastalhacking.corvus.test.util.TestIds#getRoot <em>Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Root</em>'.
+	 * @see us.coastalhacking.corvus.test.util.TestIds#getRoot()
+	 * @see #getTestIds()
+	 * @generated
+	 */
+	EReference getTestIds_Root();
 
 	/**
 	 * Returns the meta object for class '{@link us.coastalhacking.corvus.test.util.TestId <em>Test Id</em>}'.
@@ -253,6 +368,49 @@ public interface UtilPackage extends EPackage {
 	EReference getTestId_Root();
 
 	/**
+	 * Returns the meta object for the reference '{@link us.coastalhacking.corvus.test.util.TestId#getTestReference <em>Test Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Test Reference</em>'.
+	 * @see us.coastalhacking.corvus.test.util.TestId#getTestReference()
+	 * @see #getTestId()
+	 * @generated
+	 */
+	EReference getTestId_TestReference();
+
+	/**
+	 * Returns the meta object for class '{@link us.coastalhacking.corvus.test.util.TestReference <em>Test Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Test Reference</em>'.
+	 * @see us.coastalhacking.corvus.test.util.TestReference
+	 * @generated
+	 */
+	EClass getTestReference();
+
+	/**
+	 * Returns the meta object for the container reference '{@link us.coastalhacking.corvus.test.util.TestReference#getRoot <em>Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Root</em>'.
+	 * @see us.coastalhacking.corvus.test.util.TestReference#getRoot()
+	 * @see #getTestReference()
+	 * @generated
+	 */
+	EReference getTestReference_Root();
+
+	/**
+	 * Returns the meta object for the reference '{@link us.coastalhacking.corvus.test.util.TestReference#getTestId <em>Test Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Test Id</em>'.
+	 * @see us.coastalhacking.corvus.test.util.TestReference#getTestId()
+	 * @see #getTestReference()
+	 * @generated
+	 */
+	EReference getTestReference_TestId();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -286,6 +444,22 @@ public interface UtilPackage extends EPackage {
 		EClass TEST_ROOT = eINSTANCE.getTestRoot();
 
 		/**
+		 * The meta object literal for the '<em><b>Test Ids</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEST_ROOT__TEST_IDS = eINSTANCE.getTestRoot_TestIds();
+
+		/**
+		 * The meta object literal for the '<em><b>Test References</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEST_ROOT__TEST_REFERENCES = eINSTANCE.getTestRoot_TestReferences();
+
+		/**
 		 * The meta object literal for the '{@link us.coastalhacking.corvus.test.util.impl.TestIdsImpl <em>Test Ids</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -302,6 +476,14 @@ public interface UtilPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TEST_IDS__TEST_IDS = eINSTANCE.getTestIds_TestIds();
+
+		/**
+		 * The meta object literal for the '<em><b>Root</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEST_IDS__ROOT = eINSTANCE.getTestIds_Root();
 
 		/**
 		 * The meta object literal for the '{@link us.coastalhacking.corvus.test.util.impl.TestIdImpl <em>Test Id</em>}' class.
@@ -336,6 +518,40 @@ public interface UtilPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TEST_ID__ROOT = eINSTANCE.getTestId_Root();
+
+		/**
+		 * The meta object literal for the '<em><b>Test Reference</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEST_ID__TEST_REFERENCE = eINSTANCE.getTestId_TestReference();
+
+		/**
+		 * The meta object literal for the '{@link us.coastalhacking.corvus.test.util.impl.TestReferenceImpl <em>Test Reference</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see us.coastalhacking.corvus.test.util.impl.TestReferenceImpl
+		 * @see us.coastalhacking.corvus.test.util.impl.UtilPackageImpl#getTestReference()
+		 * @generated
+		 */
+		EClass TEST_REFERENCE = eINSTANCE.getTestReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Root</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEST_REFERENCE__ROOT = eINSTANCE.getTestReference_Root();
+
+		/**
+		 * The meta object literal for the '<em><b>Test Id</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEST_REFERENCE__TEST_ID = eINSTANCE.getTestReference_TestId();
 
 	}
 

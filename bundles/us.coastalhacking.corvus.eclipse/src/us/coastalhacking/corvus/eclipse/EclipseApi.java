@@ -2,6 +2,14 @@ package us.coastalhacking.corvus.eclipse;
 
 public interface EclipseApi {
 
+	interface ResourceSetListener {
+		interface Properties {
+			interface MarkerToEntryPoint {
+				String ID = "corvus.eclipse.rsl.entrypoint.id";
+			}
+		}
+	}
+	
 	interface Marker {
 		String BASE_MARKER = "us.coastalhacking.corvus.eclipse.base";
 		String ENTRY_POINT = "us.coastalhacking.corvus.eclipse.entrypoint";
@@ -39,10 +47,6 @@ public interface EclipseApi {
 		interface Properties {
 			String MARKER_TYPE = "corvus.eclipse.ircl.markertype";
 		}
-
-		interface Reference {
-			String REGISTRY = "corvus.eclipse.ircl.registry";
-		}
 	}
 
 	interface ResourceModifiedListener {
@@ -69,14 +73,6 @@ public interface EclipseApi {
 	interface EntryPointTrigger {
 		interface Component {
 			String CONFIG_PID = "corvus.entrypoint.trigger";
-		}
-	}
-
-	interface TriggerListener {
-		interface EntryPoint {
-			interface Component {
-				String CONFIG_PID = "corvus.triggers.entrypoint";
-			}	
 		}
 	}
 

@@ -1,6 +1,26 @@
 package us.coastalhacking.corvus.emf;
 
 public interface EmfApi {
+	
+	interface ResourceSetListener {
+		interface Properties {
+			String ID = "corvus.emf.rsl";
+			
+			interface ResourceModifiedListener {
+				String ID = "corvus.emf.resourcemodified";
+			}
+		}
+	}
+
+	interface IEditingDomainProvider {
+		interface Component {
+			String CONFIG_PID = "corvus.emf.iedp";
+		}
+		interface Reference {
+			String NAME = EmfApi.IEditingDomainProvider.Component.CONFIG_PID  + ".name";
+		}
+	}
+	
 	interface TransactionalEditingDomain {
 		interface Properties {
 			String ID = "corvus.emf.id";
@@ -11,8 +31,6 @@ public interface EmfApi {
 		interface Properties {
 			String LOGICAL = "corvus.emf.initializer.logical";
 			String PHYSICAL = "corvus.emf.initializer.physical";
-			@Deprecated
-			String PROJECT = "corvus.emf.initializer.project";
 		}
 		
 		interface EclipseResources {
@@ -29,36 +47,11 @@ public interface EmfApi {
 			}
 		}
 	}
-	
-	interface CorvusTransactionalFactory {
-		interface Component {
-			String CONFIG_PID = "corvus.emf.factory";
-		}
 
-		interface Reference {
-			String INITIALIZERS = "corvus.emf.factory.initializers";
-		}
-	}
-	
-	interface CorvusTransactionalRegistry {
-		interface Component {
-			String CONFIG_PID = "corvus.emf.registry";
-		}
-
-		interface Reference {
-			String FACTORY = "corvus.emf.registry.factory";
-			String NAME = "corvus.emf.registry";
-		}
-	}
-
+	@Deprecated
 	interface ResourceModifiedListener {
 		interface Component {
 			String CONFIG_PID = "corvus.emf.resourcemodified";
-		}
-
-		interface Reference {
-			@Deprecated
-			String REGISTRY = "corvus.emf.resourcemodified.registry";
 		}
 	}
 

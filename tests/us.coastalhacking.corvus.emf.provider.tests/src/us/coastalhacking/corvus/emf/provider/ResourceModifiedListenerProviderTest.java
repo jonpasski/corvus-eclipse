@@ -7,8 +7,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,10 +26,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.TransactionChangeDescription;
-import org.eclipse.emf.transaction.TransactionalEditingDomain.Factory;
-import org.eclipse.emf.transaction.TransactionalEditingDomain.Registry;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import us.coastalhacking.corvus.emf.EmfApi;
@@ -41,24 +39,15 @@ class ResourceModifiedListenerProviderTest extends AbstractProjectTest {
 		super();
 	}
 
+	@Disabled(value="Not supported")
 	@Test
 	void shouldConfigure() throws Exception {
-		Hashtable<String, Object> props = new Hashtable<>();
-		String transId = "test.eclipseresources.modified.listener";
-		props.put(EmfApi.TransactionalEditingDomain.Properties.ID, transId);
-		props.put(EmfApi.ResourceInitializer.Properties.PROJECT, project.getFullPath().toPortableString());
+		// Prep
+		Map<String, Object> filterProps = new HashMap<>();
+		filterProps.put(EmfApi.ResourceSetListener.Properties.ID, EmfApi.ResourceSetListener.Properties.ResourceModifiedListener.ID);
 
-		// Configure factory
-		configurationHelper(Factory.class, EmfApi.CorvusTransactionalFactory.Component.CONFIG_PID, props, timeout);
-
-		// Configure registry
-		Registry registry = configurationHelper(Registry.class, EmfApi.CorvusTransactionalRegistry.Component.CONFIG_PID,
-				props, timeout);
-		// ensure it's provided
-		assertNotNull(registry);
-
-		ResourceModifiedListenerProvider provider = (ResourceModifiedListenerProvider) configurationHelper(
-				ResourceSetListener.class, EmfApi.ResourceModifiedListener.Component.CONFIG_PID, props, timeout);
+		// Execute & verify
+		ResourceModifiedListenerProvider provider = (ResourceModifiedListenerProvider) serviceTrackerHelper(filterProps);
 		assertNotNull(provider);
 	}
 

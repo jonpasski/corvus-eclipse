@@ -59,6 +59,7 @@ public class UtilFactoryImpl extends EFactoryImpl implements UtilFactory {
 			case UtilPackage.TEST_ROOT: return createTestRoot();
 			case UtilPackage.TEST_IDS: return createTestIds();
 			case UtilPackage.TEST_ID: return createTestId();
+			case UtilPackage.TEST_REFERENCE: return createTestReference();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -92,6 +93,16 @@ public class UtilFactoryImpl extends EFactoryImpl implements UtilFactory {
 	public TestId createTestId() {
 		TestIdImpl testId = new TestIdImpl();
 		return testId;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TestReference createTestReference() {
+		TestReferenceImpl testReference = new TestReferenceImpl();
+		return testReference;
 	}
 
 	/**

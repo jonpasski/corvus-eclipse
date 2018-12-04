@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link us.coastalhacking.corvus.test.util.TestId#getIntrinsicId <em>Intrinsic Id</em>}</li>
  *   <li>{@link us.coastalhacking.corvus.test.util.TestId#getKey <em>Key</em>}</li>
  *   <li>{@link us.coastalhacking.corvus.test.util.TestId#getRoot <em>Root</em>}</li>
+ *   <li>{@link us.coastalhacking.corvus.test.util.TestId#getTestReference <em>Test Reference</em>}</li>
  * </ul>
  *
  * @see us.coastalhacking.corvus.test.util.UtilPackage#getTestId()
@@ -102,5 +103,33 @@ public interface TestId extends EObject {
 	 * @generated
 	 */
 	void setRoot(TestIds value);
+
+	/**
+	 * Returns the value of the '<em><b>Test Reference</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link us.coastalhacking.corvus.test.util.TestReference#getTestId <em>Test Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Test Reference</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Test Reference</em>' reference.
+	 * @see #setTestReference(TestReference)
+	 * @see us.coastalhacking.corvus.test.util.UtilPackage#getTestId_TestReference()
+	 * @see us.coastalhacking.corvus.test.util.TestReference#getTestId
+	 * @model opposite="testId"
+	 * @generated
+	 */
+	TestReference getTestReference();
+
+	/**
+	 * Sets the value of the '{@link us.coastalhacking.corvus.test.util.TestId#getTestReference <em>Test Reference</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Test Reference</em>' reference.
+	 * @see #getTestReference()
+	 * @generated
+	 */
+	void setTestReference(TestReference value);
 
 } // TestId

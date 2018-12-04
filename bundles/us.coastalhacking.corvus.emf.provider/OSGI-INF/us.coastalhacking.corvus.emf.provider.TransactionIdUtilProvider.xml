@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="us.coastalhacking.corvus.emf.provider.TransactionIdUtilProvider">
+   <service>
+      <provide interface="us.coastalhacking.corvus.emf.TransactionIdUtil"/>
+   </service>
+   <implementation class="us.coastalhacking.corvus.emf.provider.TransactionIdUtilProvider"/>
+</scr:component>

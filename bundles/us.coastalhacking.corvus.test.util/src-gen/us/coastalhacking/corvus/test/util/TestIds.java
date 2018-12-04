@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link us.coastalhacking.corvus.test.util.TestIds#getTestIds <em>Test Ids</em>}</li>
+ *   <li>{@link us.coastalhacking.corvus.test.util.TestIds#getRoot <em>Root</em>}</li>
  * </ul>
  *
  * @see us.coastalhacking.corvus.test.util.UtilPackage#getTestIds()
@@ -40,5 +41,33 @@ public interface TestIds extends EObject {
 	 * @generated
 	 */
 	EList<TestId> getTestIds();
+
+	/**
+	 * Returns the value of the '<em><b>Root</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link us.coastalhacking.corvus.test.util.TestRoot#getTestIds <em>Test Ids</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Root</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Root</em>' container reference.
+	 * @see #setRoot(TestRoot)
+	 * @see us.coastalhacking.corvus.test.util.UtilPackage#getTestIds_Root()
+	 * @see us.coastalhacking.corvus.test.util.TestRoot#getTestIds
+	 * @model opposite="testIds" transient="false"
+	 * @generated
+	 */
+	TestRoot getRoot();
+
+	/**
+	 * Sets the value of the '{@link us.coastalhacking.corvus.test.util.TestIds#getRoot <em>Root</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Root</em>' container reference.
+	 * @see #getRoot()
+	 * @generated
+	 */
+	void setRoot(TestRoot value);
 
 } // TestIds

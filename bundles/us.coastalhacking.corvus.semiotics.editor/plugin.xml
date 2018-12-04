@@ -23,7 +23,7 @@
    </extension>
 
    <extension point="org.eclipse.ui.editors">
-      <!-- @generated Semiotics -->
+      <!-- @generated NOT Semiotics -->
       <editor
             id="us.coastalhacking.corvus.semiotics.editor.SemioticsEditorID"
             name="%_UI_SemioticsEditor_label"

@@ -4,6 +4,7 @@ package us.coastalhacking.corvus.test.util.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -11,13 +12,16 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import us.coastalhacking.corvus.test.util.TestId;
 import us.coastalhacking.corvus.test.util.TestIds;
+import us.coastalhacking.corvus.test.util.TestRoot;
 import us.coastalhacking.corvus.test.util.UtilPackage;
 
 /**
@@ -29,6 +33,7 @@ import us.coastalhacking.corvus.test.util.UtilPackage;
  * </p>
  * <ul>
  *   <li>{@link us.coastalhacking.corvus.test.util.impl.TestIdsImpl#getTestIds <em>Test Ids</em>}</li>
+ *   <li>{@link us.coastalhacking.corvus.test.util.impl.TestIdsImpl#getRoot <em>Root</em>}</li>
  * </ul>
  *
  * @generated
@@ -80,12 +85,67 @@ public class TestIdsImpl extends MinimalEObjectImpl.Container implements TestIds
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TestRoot getRoot() {
+		if (eContainerFeatureID() != UtilPackage.TEST_IDS__ROOT) return null;
+		return (TestRoot)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TestRoot basicGetRoot() {
+		if (eContainerFeatureID() != UtilPackage.TEST_IDS__ROOT) return null;
+		return (TestRoot)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetRoot(TestRoot newRoot, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newRoot, UtilPackage.TEST_IDS__ROOT, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRoot(TestRoot newRoot) {
+		if (newRoot != eInternalContainer() || (eContainerFeatureID() != UtilPackage.TEST_IDS__ROOT && newRoot != null)) {
+			if (EcoreUtil.isAncestor(this, newRoot))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newRoot != null)
+				msgs = ((InternalEObject)newRoot).eInverseAdd(this, UtilPackage.TEST_ROOT__TEST_IDS, TestRoot.class, msgs);
+			msgs = basicSetRoot(newRoot, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.TEST_IDS__ROOT, newRoot, newRoot));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UtilPackage.TEST_IDS__TEST_IDS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getTestIds()).basicAdd(otherEnd, msgs);
+			case UtilPackage.TEST_IDS__ROOT:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetRoot((TestRoot)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -100,8 +160,24 @@ public class TestIdsImpl extends MinimalEObjectImpl.Container implements TestIds
 		switch (featureID) {
 			case UtilPackage.TEST_IDS__TEST_IDS:
 				return ((InternalEList<?>)getTestIds()).basicRemove(otherEnd, msgs);
+			case UtilPackage.TEST_IDS__ROOT:
+				return basicSetRoot(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case UtilPackage.TEST_IDS__ROOT:
+				return eInternalContainer().eInverseRemove(this, UtilPackage.TEST_ROOT__TEST_IDS, TestRoot.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
@@ -114,6 +190,9 @@ public class TestIdsImpl extends MinimalEObjectImpl.Container implements TestIds
 		switch (featureID) {
 			case UtilPackage.TEST_IDS__TEST_IDS:
 				return getTestIds();
+			case UtilPackage.TEST_IDS__ROOT:
+				if (resolve) return getRoot();
+				return basicGetRoot();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -131,6 +210,9 @@ public class TestIdsImpl extends MinimalEObjectImpl.Container implements TestIds
 				getTestIds().clear();
 				getTestIds().addAll((Collection<? extends TestId>)newValue);
 				return;
+			case UtilPackage.TEST_IDS__ROOT:
+				setRoot((TestRoot)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -146,6 +228,9 @@ public class TestIdsImpl extends MinimalEObjectImpl.Container implements TestIds
 			case UtilPackage.TEST_IDS__TEST_IDS:
 				getTestIds().clear();
 				return;
+			case UtilPackage.TEST_IDS__ROOT:
+				setRoot((TestRoot)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -160,6 +245,8 @@ public class TestIdsImpl extends MinimalEObjectImpl.Container implements TestIds
 		switch (featureID) {
 			case UtilPackage.TEST_IDS__TEST_IDS:
 				return testIds != null && !testIds.isEmpty();
+			case UtilPackage.TEST_IDS__ROOT:
+				return basicGetRoot() != null;
 		}
 		return super.eIsSet(featureID);
 	}

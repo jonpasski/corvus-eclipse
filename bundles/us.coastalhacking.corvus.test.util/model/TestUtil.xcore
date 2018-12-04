@@ -1,15 +1,25 @@
+@GenModel(childCreationExtenders="true", editDirectory="/us.coastalhacking.corvus.test.util/src-gen",
+	modelPluginVariables="org.eclipse.xtext.xbase.lib org.eclipse.emf.ecore.xcore.lib org.eclipse.core.resources")
 package us.coastalhacking.corvus.test.util
 
 class TestRoot {
-	
+	contains TestIds[] testIds opposite root
+	contains TestReference[] testReferences opposite root
 }
 
 class TestIds {
 	contains TestId[] testIds opposite root keys key
+	container TestRoot root opposite testIds
 }
 
 class TestId {
 	id String intrinsicId
 	String key
 	container TestIds root opposite testIds
+	refers TestReference testReference opposite testId
+}
+
+class TestReference {
+	container TestRoot root opposite testReferences
+	refers TestId testId opposite testReference
 }

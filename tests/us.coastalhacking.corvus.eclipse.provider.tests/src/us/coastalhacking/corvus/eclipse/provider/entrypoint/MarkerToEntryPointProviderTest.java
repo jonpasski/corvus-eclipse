@@ -24,9 +24,6 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.TransactionalEditingDomain.Factory;
-import org.eclipse.emf.transaction.TransactionalEditingDomain.Registry;
-import org.eclipse.emf.transaction.TriggerListener;
 import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,7 +59,7 @@ class MarkerToEntryPointProviderTest extends AbstractProjectTest {
 	IResource resource;
 
 	@BeforeEach
-	void beforeSubEach() {
+	void subBeforeEach() throws Exception {
 		domain = new TransactionalEditingDomainImpl(new ComposedAdapterFactory());
 		epResource = new ResourceImpl();
 		markerResource = new ResourceImpl();
@@ -81,7 +78,6 @@ class MarkerToEntryPointProviderTest extends AbstractProjectTest {
 		epLogical = URI.createURI("test:ep.logical");
 		markerLogical = URI.createURI("test:marker.logical");
 		provider = new MarkerToEntryPointProvider();
-		provider.domain = domain;
 		provider.epLogicalUri = epLogical;
 		epPhysical = URI.createPlatformResourceURI(
 				project.getFile(EcoreUtil.generateUUID()).getFullPath().toPortableString(), true);
@@ -105,24 +101,9 @@ class MarkerToEntryPointProviderTest extends AbstractProjectTest {
 
 	@Test
 	void shouldConfigureForOsgi() throws Exception {
-		final Map<String, Object> props = new HashMap<>();
-		final String fullPath = project.getFullPath().toPortableString();
-		props.put(EmfApi.ResourceInitializer.Properties.PROJECT, fullPath);
-		String transactionId = EcoreUtil.generateUUID();
-		props.put(EmfApi.TransactionalEditingDomain.Properties.ID, transactionId);
-
-		// Configure factory
-		Factory factory = configurationHelper(Factory.class, EmfApi.CorvusTransactionalFactory.Component.CONFIG_PID,
-				props, timeout);
-		assertNotNull(factory);
-
-		// Configure registry
-		Registry registry = configurationHelper(Registry.class, EmfApi.CorvusTransactionalRegistry.Component.CONFIG_PID,
-				props, timeout);
-		assertNotNull(registry);
-
-		MarkerToEntryPointProvider provider = (MarkerToEntryPointProvider) configurationHelper(TriggerListener.class,
-				EclipseApi.TriggerListener.EntryPoint.Component.CONFIG_PID, props, timeout);
+		Map<String, Object> filterProps = new HashMap<>();
+		filterProps.put(EmfApi.ResourceSetListener.Properties.ID, EclipseApi.ResourceSetListener.Properties.MarkerToEntryPoint.ID);
+		MarkerToEntryPointProvider provider = (MarkerToEntryPointProvider) serviceTrackerHelper(filterProps);
 		assertNotNull(provider);
 	}
 

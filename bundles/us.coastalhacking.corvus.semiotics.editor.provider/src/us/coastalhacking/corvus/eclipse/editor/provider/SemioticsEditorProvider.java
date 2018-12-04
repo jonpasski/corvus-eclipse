@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -17,12 +18,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTreeEditor;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.TransactionalEditingDomain.Registry;
 import org.eclipse.emf.transaction.ui.provider.TransactionalAdapterFactoryContentProvider;
 import org.eclipse.emf.transaction.ui.provider.TransactionalAdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -50,9 +51,11 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 import us.coastalhacking.corvus.emf.EmfApi;
+import us.coastalhacking.corvus.emf.TransactionIdUtil;
 import us.coastalhacking.corvus.semiotics.editor.SemioticsEditor;
 import us.coastalhacking.corvus.semiotics.editor.SemioticsEditorPlugin;
 
@@ -60,14 +63,20 @@ import us.coastalhacking.corvus.semiotics.editor.SemioticsEditorPlugin;
 @Component(factory = "us.coastalhacking.corvus.semiotics.editor.SemioticsEditor")
 public class SemioticsEditorProvider extends SemioticsEditor {
 
+	AtomicBoolean disposed = new AtomicBoolean(false);
+
+	@Reference
+	TransactionIdUtil idUtil;
+	
 	@Reference
 	IWorkbench workbench;
 	// Set by above
 	IEclipseContext e4Context;
 	ESelectionService selectionService;
 
-	@Reference(name = EmfApi.CorvusTransactionalRegistry.Reference.NAME)
-	Registry registry;
+	@Reference(name=EmfApi.IEditingDomainProvider.Reference.NAME)
+	IEditingDomainProvider domainProvider;
+
 
 	@Activate
 	void activate(Map<String, Object> props) {
@@ -78,17 +87,14 @@ public class SemioticsEditorProvider extends SemioticsEditor {
 		IStructuredSelection structured = adapter.adapt(selection, IStructuredSelection.class);
 		IResource resource = adapter.adapt(structured.getFirstElement(), IResource.class);
 		if (resource != null) {
-			// TODO: move to util project
-			// also see CorvusTabProvider.performApply
-			String projectName = resource.getProject().getFullPath().toPortableString();
-			String encodedProjectName = URI.encodeSegment(projectName, true);
-			EditingDomain transactional = registry.getEditingDomain(encodedProjectName);
-			if (transactional == null) {
+			String projectName = idUtil.getId(resource.getProject());
+			EditingDomain providedEditingDomain = domainProvider.getEditingDomain();
+			if (providedEditingDomain == null) {
 				throw new IllegalStateException(
 						MessageFormat.format("No editing domain found for project {0}", projectName));
 			} else {
-				if (transactional instanceof AdapterFactoryEditingDomain) {
-					editingDomain = (AdapterFactoryEditingDomain) transactional;
+				if (providedEditingDomain instanceof AdapterFactoryEditingDomain) {
+					editingDomain = (AdapterFactoryEditingDomain) providedEditingDomain;
 					if (editingDomain.getAdapterFactory() instanceof ComposedAdapterFactory) {
 						adapterFactory = (ComposedAdapterFactory) editingDomain.getAdapterFactory();
 					} else {
@@ -105,6 +111,14 @@ public class SemioticsEditorProvider extends SemioticsEditor {
 		} else {
 			throw new IllegalStateException("No resource selected, no way to determine project");
 		}
+	}
+
+	@Deactivate
+	void deactivate() {
+		if (disposed.getAndSet(true)) {
+			return;
+		}
+		this.dispose();
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.workbench.IWorkbench;
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.transaction.TransactionalEditingDomain.Factory;
 import org.eclipse.emf.transaction.TransactionalEditingDomain.Registry;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -31,6 +31,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import us.coastalhacking.corvus.emf.EmfApi;
+import us.coastalhacking.corvus.emf.TransactionIdUtil;
 import us.coastalhacking.corvus.test.util.AbstractProjectTest;
 
 class SemioticsEditorProviderTest extends AbstractProjectTest {
@@ -44,7 +45,10 @@ class SemioticsEditorProviderTest extends AbstractProjectTest {
 	IEclipseContext eclipseContext;
 	Registry registry;
 	Factory factory;
-
+	IEditingDomainProvider domainProvider;
+	TransactionIdUtil idUtil;
+	
+	
 	@BeforeEach
 	void subBeforeEach() throws Exception {
 		workbench = serviceTrackerHelper(IWorkbench.class);
@@ -52,19 +56,22 @@ class SemioticsEditorProviderTest extends AbstractProjectTest {
 		eclipseContext = workbench.getApplication().getContext();
 		workbench3 = eclipseContext.get(org.eclipse.ui.IWorkbench.class);
 		assertNotNull(eclipseContext);
+
+		idUtil = serviceTrackerHelper(TransactionIdUtil.class);
+		assertNotNull(idUtil);
+
 		Map<String, Object> props = new HashMap<>();
-		String projectName = project.getFullPath().toPortableString();
-		props.put(EmfApi.ResourceInitializer.Properties.PROJECT, projectName);
-		// TODO move URI code out of here into util
-		props.put(EmfApi.TransactionalEditingDomain.Properties.ID, URI.encodeSegment(projectName, true));
+		String id = idUtil.getId(project);
+		idUtil.putId(props, id);
 
-		factory = configurationHelper(Factory.class, EmfApi.CorvusTransactionalFactory.Component.CONFIG_PID, props,
-				timeout);
+		factory = serviceTrackerHelper(Factory.class);
 		assertNotNull(factory);
+		registry = serviceTrackerHelper(Registry.class);
+		assertNotNull(registry);
 
-		registry = configurationHelper(Registry.class, EmfApi.CorvusTransactionalRegistry.Component.CONFIG_PID, props,
-				timeout);
-		assertNotNull(registry);		
+		domainProvider = configurationHelper(IEditingDomainProvider.class,
+				EmfApi.IEditingDomainProvider.Component.CONFIG_PID, props, timeout);
+		assertNotNull(domainProvider);
 	}
 
 	@AfterEach
@@ -76,7 +83,7 @@ class SemioticsEditorProviderTest extends AbstractProjectTest {
 	}
 
 	@Test
-	
+
 	void shouldConfigure() throws Exception {
 		// Need to have an IFile that's selected for the provider to work
 		IFile file = createFile("foo.semiotics", "");
@@ -106,7 +113,7 @@ class SemioticsEditorProviderTest extends AbstractProjectTest {
 				fail(e);
 			}
 		});
-		
+
 		assertTrue(latch.await(3, TimeUnit.SECONDS));
 	}
 

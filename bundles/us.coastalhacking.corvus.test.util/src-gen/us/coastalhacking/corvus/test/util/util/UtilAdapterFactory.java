@@ -80,6 +80,10 @@ public class UtilAdapterFactory extends AdapterFactoryImpl {
 				return createTestIdAdapter();
 			}
 			@Override
+			public Adapter caseTestReference(TestReference object) {
+				return createTestReferenceAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -138,6 +142,20 @@ public class UtilAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTestIdAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link us.coastalhacking.corvus.test.util.TestReference <em>Test Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see us.coastalhacking.corvus.test.util.TestReference
+	 * @generated
+	 */
+	public Adapter createTestReferenceAdapter() {
 		return null;
 	}
 

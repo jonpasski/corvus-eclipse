@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import us.coastalhacking.corvus.test.util.TestId;
 import us.coastalhacking.corvus.test.util.TestIds;
+import us.coastalhacking.corvus.test.util.TestReference;
 import us.coastalhacking.corvus.test.util.UtilPackage;
 
 /**
@@ -28,6 +29,7 @@ import us.coastalhacking.corvus.test.util.UtilPackage;
  *   <li>{@link us.coastalhacking.corvus.test.util.impl.TestIdImpl#getIntrinsicId <em>Intrinsic Id</em>}</li>
  *   <li>{@link us.coastalhacking.corvus.test.util.impl.TestIdImpl#getKey <em>Key</em>}</li>
  *   <li>{@link us.coastalhacking.corvus.test.util.impl.TestIdImpl#getRoot <em>Root</em>}</li>
+ *   <li>{@link us.coastalhacking.corvus.test.util.impl.TestIdImpl#getTestReference <em>Test Reference</em>}</li>
  * </ul>
  *
  * @generated
@@ -72,6 +74,16 @@ public class TestIdImpl extends MinimalEObjectImpl.Container implements TestId {
 	 * @ordered
 	 */
 	protected String key = KEY_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getTestReference() <em>Test Reference</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTestReference()
+	 * @generated
+	 * @ordered
+	 */
+	protected TestReference testReference;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -190,6 +202,66 @@ public class TestIdImpl extends MinimalEObjectImpl.Container implements TestId {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TestReference getTestReference() {
+		if (testReference != null && testReference.eIsProxy()) {
+			InternalEObject oldTestReference = (InternalEObject)testReference;
+			testReference = (TestReference)eResolveProxy(oldTestReference);
+			if (testReference != oldTestReference) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UtilPackage.TEST_ID__TEST_REFERENCE, oldTestReference, testReference));
+			}
+		}
+		return testReference;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TestReference basicGetTestReference() {
+		return testReference;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetTestReference(TestReference newTestReference, NotificationChain msgs) {
+		TestReference oldTestReference = testReference;
+		testReference = newTestReference;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, UtilPackage.TEST_ID__TEST_REFERENCE, oldTestReference, newTestReference);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTestReference(TestReference newTestReference) {
+		if (newTestReference != testReference) {
+			NotificationChain msgs = null;
+			if (testReference != null)
+				msgs = ((InternalEObject)testReference).eInverseRemove(this, UtilPackage.TEST_REFERENCE__TEST_ID, TestReference.class, msgs);
+			if (newTestReference != null)
+				msgs = ((InternalEObject)newTestReference).eInverseAdd(this, UtilPackage.TEST_REFERENCE__TEST_ID, TestReference.class, msgs);
+			msgs = basicSetTestReference(newTestReference, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.TEST_ID__TEST_REFERENCE, newTestReference, newTestReference));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -197,6 +269,10 @@ public class TestIdImpl extends MinimalEObjectImpl.Container implements TestId {
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetRoot((TestIds)otherEnd, msgs);
+			case UtilPackage.TEST_ID__TEST_REFERENCE:
+				if (testReference != null)
+					msgs = ((InternalEObject)testReference).eInverseRemove(this, UtilPackage.TEST_REFERENCE__TEST_ID, TestReference.class, msgs);
+				return basicSetTestReference((TestReference)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -211,6 +287,8 @@ public class TestIdImpl extends MinimalEObjectImpl.Container implements TestId {
 		switch (featureID) {
 			case UtilPackage.TEST_ID__ROOT:
 				return basicSetRoot(null, msgs);
+			case UtilPackage.TEST_ID__TEST_REFERENCE:
+				return basicSetTestReference(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -244,6 +322,9 @@ public class TestIdImpl extends MinimalEObjectImpl.Container implements TestId {
 			case UtilPackage.TEST_ID__ROOT:
 				if (resolve) return getRoot();
 				return basicGetRoot();
+			case UtilPackage.TEST_ID__TEST_REFERENCE:
+				if (resolve) return getTestReference();
+				return basicGetTestReference();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -264,6 +345,9 @@ public class TestIdImpl extends MinimalEObjectImpl.Container implements TestId {
 				return;
 			case UtilPackage.TEST_ID__ROOT:
 				setRoot((TestIds)newValue);
+				return;
+			case UtilPackage.TEST_ID__TEST_REFERENCE:
+				setTestReference((TestReference)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -286,6 +370,9 @@ public class TestIdImpl extends MinimalEObjectImpl.Container implements TestId {
 			case UtilPackage.TEST_ID__ROOT:
 				setRoot((TestIds)null);
 				return;
+			case UtilPackage.TEST_ID__TEST_REFERENCE:
+				setTestReference((TestReference)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -304,6 +391,8 @@ public class TestIdImpl extends MinimalEObjectImpl.Container implements TestId {
 				return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
 			case UtilPackage.TEST_ID__ROOT:
 				return basicGetRoot() != null;
+			case UtilPackage.TEST_ID__TEST_REFERENCE:
+				return testReference != null;
 		}
 		return super.eIsSet(featureID);
 	}

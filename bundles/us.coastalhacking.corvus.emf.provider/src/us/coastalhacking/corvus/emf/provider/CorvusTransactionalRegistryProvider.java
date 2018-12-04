@@ -7,18 +7,16 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.TransactionalEditingDomain.Factory;
 import org.eclipse.emf.transaction.TransactionalEditingDomain.Registry;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
-import us.coastalhacking.corvus.emf.EmfApi;
-
-@Component(service = Registry.class, configurationPid = EmfApi.CorvusTransactionalRegistry.Component.CONFIG_PID, configurationPolicy = ConfigurationPolicy.REQUIRE, immediate=true)
+@Component(service = Registry.class, immediate=true, scope=ServiceScope.SINGLETON)
 public class CorvusTransactionalRegistryProvider implements Registry {
 
 	final Map<String, TransactionalEditingDomain> registries = new ConcurrentHashMap<>();
 
-	@Reference(name = EmfApi.CorvusTransactionalRegistry.Reference.FACTORY)
+	@Reference
 	Factory factory;
 
 	@Deactivate

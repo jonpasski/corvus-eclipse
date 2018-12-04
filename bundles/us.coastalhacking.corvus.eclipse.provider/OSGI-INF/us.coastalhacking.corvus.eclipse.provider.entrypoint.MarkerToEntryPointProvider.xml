@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" activate="activate" configuration-pid="corvus.triggers.entrypoint" configuration-policy="require" deactivate="deactivate" immediate="true" name="us.coastalhacking.corvus.eclipse.provider.entrypoint.MarkerToEntryPointProvider">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="us.coastalhacking.corvus.eclipse.provider.entrypoint.MarkerToEntryPointProvider">
+   <property name="corvus.emf.rsl" value="corvus.eclipse.rsl.entrypoint.id"/>
    <service>
-      <provide interface="org.eclipse.emf.transaction.TriggerListener"/>
+      <provide interface="org.eclipse.emf.transaction.ResourceSetListener"/>
    </service>
-   <reference cardinality="1..1" field="registry" interface="org.eclipse.emf.transaction.TransactionalEditingDomain$Registry" name="corvus.emf.registry"/>
    <implementation class="us.coastalhacking.corvus.eclipse.provider.entrypoint.MarkerToEntryPointProvider"/>
 </scr:component>
