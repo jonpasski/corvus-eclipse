@@ -18,6 +18,7 @@ public class CorvusAppProcessBase implements IProcess {
 	public CorvusAppProcessBase(ILaunch launch, ComponentInstance appInstance, String label) {
 		this.launch = launch;
 		this.appInstance = appInstance;
+
 		// Don't need to save the result
 		appInstance.getInstance();
 		this.label = label;

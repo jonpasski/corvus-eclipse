@@ -14,7 +14,9 @@ Import-Package: javax.inject;version="1.0.0",
  org.osgi.framework,
  org.osgi.service.component;version="1.3.0",
  org.osgi.service.event;version="1.4.0",
- us.coastalhacking.corvus.emf
+ us.coastalhacking.corvus.eclipse,
+ us.coastalhacking.corvus.emf,
+ us.coastalhacking.corvus.util
 Require-Bundle: org.eclipse.e4.ui.model.workbench
 Export-Package: us.coastalhacking.corvus.eclipse
 Bundle-ActivationPolicy: lazy

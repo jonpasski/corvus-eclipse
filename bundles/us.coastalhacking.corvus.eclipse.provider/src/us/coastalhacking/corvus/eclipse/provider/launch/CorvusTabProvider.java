@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 import us.coastalhacking.corvus.eclipse.EclipseApi;
-import us.coastalhacking.corvus.emf.EmfApi;
 import us.coastalhacking.corvus.emf.TransactionIdUtil;
 
 @Component(service=ILaunchConfigurationTab2.class, scope=ServiceScope.PROTOTYPE)
@@ -53,9 +52,8 @@ public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		// called once
-		String projectName = null;
 		try {
-			projectName = configuration.getAttribute(EmfApi.TransactionalEditingDomain.Properties.ID, projectName);
+			String projectName = idUtil.getId(configuration.getAttributes());
 			if (projectName != null) {
 				IProject maybeProject = workspace.getRoot().getProject(projectName);
 				if (maybeProject != null) {
@@ -77,7 +75,13 @@ public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 			final String id = projectText.getText();
 			// Remove first forward slash
 			configuration.rename(id.substring(1));
-			configuration.setAttribute(EmfApi.TransactionalEditingDomain.Properties.ID, id);
+			try {
+				idUtil.putId(configuration.getAttributes(), id);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//			configuration.setAttribute(EmfApi.TransactionalEditingDomain.Properties.ID, id);
 			//configuration.setAttribute(EmfApi.ResourceInitializer.Properties.PROJECT, id);
 		}
 	}

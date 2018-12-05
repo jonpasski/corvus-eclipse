@@ -5,6 +5,7 @@ import java.util.Map;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.URI;
 
+// TODO: if these can return null, return Optional instead
 public interface TransactionIdUtil {
 
 	String getId(Map<String, Object> props);

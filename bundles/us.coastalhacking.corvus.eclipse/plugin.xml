@@ -68,13 +68,13 @@
             id="us.coastalhacking.corvus.launchconfiguration"
             name="Corvus"
             modes="run"
-            delegate="us.coastalhacking.corvus.eclipse.CorvusLaunchFactory:corvus.launch.factory.launcher">
+            delegate="us.coastalhacking.corvus.util.OsgiExtensionFactory:corvus.launch.factory.launcher">
       </launchConfigurationType>
    </extension>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
-            class="us.coastalhacking.corvus.eclipse.CorvusLaunchFactory:corvus.launch.factory.tabgroup"
+            class="us.coastalhacking.corvus.util.OsgiExtensionFactory:corvus.launch.factory.tabgroup"
             id="us.coastalhacking.corvus.launchtabgroup"
             type="us.coastalhacking.corvus.launchconfiguration">
       </launchConfigurationTabGroup>

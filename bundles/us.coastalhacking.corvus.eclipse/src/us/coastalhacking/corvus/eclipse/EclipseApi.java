@@ -9,7 +9,7 @@ public interface EclipseApi {
 			}
 		}
 	}
-	
+
 	interface Marker {
 		String BASE_MARKER = "us.coastalhacking.corvus.eclipse.base";
 		String ENTRY_POINT = "us.coastalhacking.corvus.eclipse.entrypoint";
@@ -66,13 +66,6 @@ public interface EclipseApi {
 
 		interface Reference {
 			String MARKER_PROVIDER = "corvus.markersupport.markerprovider";
-		}
-	}
-
-	@Deprecated
-	interface EntryPointTrigger {
-		interface Component {
-			String CONFIG_PID = "corvus.entrypoint.trigger";
 		}
 	}
 
