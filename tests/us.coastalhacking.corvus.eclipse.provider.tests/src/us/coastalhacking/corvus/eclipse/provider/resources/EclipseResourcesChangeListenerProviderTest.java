@@ -80,7 +80,6 @@ class EclipseResourcesChangeListenerProviderTest extends AbstractProjectTest {
 		} catch (Exception e) {
 			fail(e);
 		}
-		System.out.println("subBeforeEach start");
 		try {
 			idUtil = serviceTrackerHelper(TransactionIdUtil.class);
 		} catch (Exception e) {
@@ -105,8 +104,6 @@ class EclipseResourcesChangeListenerProviderTest extends AbstractProjectTest {
 		}
 		assertNotNull(registry);
 
-		System.out.println("subBeforeEach prior domainProvider");
-		// FIXME: wtf
 		IEditingDomainProvider domainProvider = null;
 		try {
 			domainProvider = configurationHelper(IEditingDomainProvider.class, EmfApi.IEditingDomainProvider.Component.CONFIG_PID, props, timeout);
@@ -114,9 +111,7 @@ class EclipseResourcesChangeListenerProviderTest extends AbstractProjectTest {
 			fail(e);
 		}
 		assertNotNull(domainProvider);
-		System.out.println("subBeforeEach after domainProvider");
 		this.domainProvider = domainProvider;
-		System.out.println("subBeforeEach end");
 	}
 	
 	@AfterEach

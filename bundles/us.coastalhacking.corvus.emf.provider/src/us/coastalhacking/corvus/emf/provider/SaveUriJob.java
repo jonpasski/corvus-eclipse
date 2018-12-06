@@ -31,6 +31,7 @@ public class SaveUriJob extends WorkspaceJob {
 	public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 		final Command command = SaveCommand.create(domain, options, uris);
 		domain.getCommandStack().execute(command);
+		// TODO: review the command to determine correct status
 		return Status.OK_STATUS;
 	}
 

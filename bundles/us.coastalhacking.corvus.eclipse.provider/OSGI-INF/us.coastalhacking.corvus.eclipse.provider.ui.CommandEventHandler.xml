@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="us.coastalhacking.corvus.eclipse.provider.ui.CommandEventHandler">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" activate="activate" name="us.coastalhacking.corvus.eclipse.provider.ui.CommandEventHandler">
    <property name="event.topics" value="us/coastalhacking/corvus/eclipse/marker/*"/>
    <service>
       <provide interface="org.osgi.service.event.EventHandler"/>
    </service>
+   <reference cardinality="1..1" field="loggerFactory" interface="org.osgi.service.log.LoggerFactory" name="loggerFactory"/>
    <reference cardinality="1..1" field="markerSupport" interface="us.coastalhacking.corvus.eclipse.MarkerSupport" name="markerSupport"/>
    <implementation class="us.coastalhacking.corvus.eclipse.provider.ui.CommandEventHandler"/>
 </scr:component>

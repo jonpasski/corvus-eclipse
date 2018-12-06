@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" name="us.coastalhacking.corvus.eclipse.provider.launch.CorvusTabProvider">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" activate="activate" name="us.coastalhacking.corvus.eclipse.provider.launch.CorvusTabProvider">
    <service scope="prototype">
       <provide interface="org.eclipse.debug.ui.ILaunchConfigurationTab2"/>
    </service>
    <reference cardinality="1..1" field="idUtil" interface="us.coastalhacking.corvus.emf.TransactionIdUtil" name="idUtil"/>
+   <reference cardinality="1..1" field="loggerFactory" interface="org.osgi.service.log.LoggerFactory" name="loggerFactory"/>
    <reference cardinality="1..1" field="workspace" interface="org.eclipse.core.resources.IWorkspace" name="workspace"/>
    <implementation class="us.coastalhacking.corvus.eclipse.provider.launch.CorvusTabProvider"/>
 </scr:component>

@@ -1,7 +1,12 @@
 package us.coastalhacking.corvus.eclipse.provider.ui;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -14,21 +19,58 @@ import java.util.concurrent.Future;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.osgi.framework.Constants;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventConstants;
 import org.osgi.service.event.EventHandler;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerFactory;
 
+import us.coastalhacking.corvus.eclipse.EclipseApi;
 import us.coastalhacking.corvus.eclipse.MarkerSupport;
 import us.coastalhacking.corvus.eclipse.MarkerSupport.Coordinate;
-import us.coastalhacking.corvus.test.util.AbstractCMTest;
-import us.coastalhacking.corvus.eclipse.EclipseApi;
+import us.coastalhacking.corvus.test.util.AbstractProjectTest;
 
-class CommandEventHandlerTest extends AbstractCMTest {
+class CommandEventHandlerTest extends AbstractProjectTest {
 
 	public CommandEventHandlerTest() throws Exception {
 		super();
+	}
+
+	// Mocks
+	//
+	static final String mockMarkerKey = "mockKey";
+	Coordinate mockCoordinate = mock(Coordinate.class);
+	Optional<Coordinate> mockMaybeCoordinate;
+	MarkerSupport mockSupport;
+	Event mockEvent;
+	Logger mockLogger;
+	LoggerFactory mockLoggerFactory;
+	Map<String, Object> mockProps;
+	CommandEventHandler provider;
+
+	@BeforeEach
+	void subBeforeEach() throws Exception {
+		provider = new CommandEventHandler();
+
+		mockCoordinate = mock(Coordinate.class);
+		mockMaybeCoordinate = Optional.of(mockCoordinate);
+		mockSupport = mock(MarkerSupport.class);
+		provider.markerSupport = mockSupport;
+
+		mockLogger = mock(Logger.class);
+		mockLoggerFactory = mock(LoggerFactory.class);
+		when(mockLoggerFactory.getLogger(any(Class.class))).thenReturn(mockLogger);
+
+		mockProps = new HashMap<>();
+		mockProps.put(EclipseApi.Event.Marker.PROP_TYPE, mockMarkerKey);
+		mockEvent = new Event(EclipseApi.Event.Marker.TOPIC_ADD, mockProps);
+
+		provider.loggerFactory = mockLoggerFactory;
+		assertNull(provider.logger);
 	}
 
 	@Test
@@ -36,7 +78,7 @@ class CommandEventHandlerTest extends AbstractCMTest {
 		// Verify dependencies
 		MarkerSupport markerSupport = serviceTrackerHelper(MarkerSupport.class);
 		assertNotNull(markerSupport);
-		
+
 		Map<String, Object> props = new HashMap<>();
 		props.put(EventConstants.EVENT_TOPIC, EclipseApi.Event.Marker.TOPIC_ALL);
 		props.put(Constants.OBJECTCLASS, EventHandler.class.getName());
@@ -44,7 +86,7 @@ class CommandEventHandlerTest extends AbstractCMTest {
 		assertNotNull(object);
 		assertTrue(object instanceof EventHandler);
 	}
-	
+
 	@Test
 	void shouldHandleEvent() throws Exception {
 
@@ -71,8 +113,33 @@ class CommandEventHandlerTest extends AbstractCMTest {
 		Event event = new Event(EclipseApi.Event.Marker.TOPIC_ADD, map);
 
 		// Call & verify
-		eventHandler.handleEvent(event);		
+		eventHandler.handleEvent(event);
 		verify(support, times(1)).createMarker(coordinate, fullPath, markerKey);
+	}
+
+	@Test
+	void shouldNotHandleEvent() throws Exception {
+		// Prep
+		Exception mockException = mock(Exception.class);
+		when(mockSupport.getSelectedCoordinate()).thenThrow(mockException);
+		ArgumentCaptor<Exception> exceptionCaptor = ArgumentCaptor.forClass(Exception.class);
+		provider.logger = mockLogger;
+
+		// Execute
+		provider.handleEvent(mockEvent);
+
+		// Verify
+		verify(mockLogger, times(1)).warn(anyString(), eq(mockMarkerKey), exceptionCaptor.capture());
+		assertEquals(mockException, exceptionCaptor.getValue());
+	}
+
+	@Test
+	void shouldActivate() {
+		// Execute
+		provider.activate();
+
+		// Verify
+		assertNotNull(provider.logger);
 	}
 
 }

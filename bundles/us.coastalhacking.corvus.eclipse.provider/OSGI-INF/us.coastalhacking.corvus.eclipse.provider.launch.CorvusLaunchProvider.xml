@@ -2,5 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" activate="activate" deactivate="deactivate" factory="corvus.launch.factory.launcher" name="us.coastalhacking.corvus.eclipse.provider.launch.CorvusLaunchProvider">
    <reference cardinality="1..1" field="appFactory" interface="org.osgi.service.component.ComponentFactory" name="corvus.launch.app.factory" target="(component.factory=corvus.eclipse.app.factory)"/>
    <reference cardinality="1..1" field="idUtil" interface="us.coastalhacking.corvus.emf.TransactionIdUtil" name="idUtil"/>
+   <reference cardinality="1..1" field="loggerFactory" interface="org.osgi.service.log.LoggerFactory" name="loggerFactory"/>
    <implementation class="us.coastalhacking.corvus.eclipse.provider.launch.CorvusLaunchProvider"/>
 </scr:component>

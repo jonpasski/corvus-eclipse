@@ -2,9 +2,13 @@ package us.coastalhacking.corvus.eclipse.provider.launch;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -15,6 +19,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.IProcess;
@@ -28,6 +33,8 @@ import org.mockito.ArgumentCaptor;
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerFactory;
 
 import us.coastalhacking.corvus.eclipse.EclipseApi;
 import us.coastalhacking.corvus.emf.EmfApi;
@@ -50,6 +57,7 @@ class CorvusLaunchProviderTest extends AbstractProjectTest {
 	IEditingDomainProvider domainProvider;
 	ComponentFactory appFactory;
 	ComponentInstance launcherInstance;
+	LoggerFactory loggerFactory;
 
 	// Mock
 	//
@@ -61,6 +69,10 @@ class CorvusLaunchProviderTest extends AbstractProjectTest {
 	ComponentInstance mockLauncherInstance;
 	ILaunchConfiguration mockConfig;
 	Map<String, Object> mockProps;
+	LoggerFactory mockLoggerFactory;
+	Logger mockLogger;
+	DebugException mockException;
+	ArgumentCaptor<DebugException> exceptionCaptor;
 
 	@BeforeEach
 	void subBeforeEach() throws Exception {
@@ -79,6 +91,7 @@ class CorvusLaunchProviderTest extends AbstractProjectTest {
 		final Map<String, Object> appFilterProps = new HashMap<>();
 		appFilterProps.put(ComponentConstants.COMPONENT_FACTORY, EclipseApi.CorvusApp.Component.FACTORY);
 		appFactory = (ComponentFactory) serviceTrackerHelper(appFilterProps);
+		loggerFactory = serviceTrackerHelper(LoggerFactory.class);
 
 		// Mock
 		//
@@ -98,6 +111,14 @@ class CorvusLaunchProviderTest extends AbstractProjectTest {
 
 		mockConfig = mock(ILaunchConfiguration.class);
 
+		mockLogger = mock(Logger.class);
+		mockLoggerFactory = mock(LoggerFactory.class);
+		when(mockLoggerFactory.getLogger(any(Class.class))).thenReturn(mockLogger);
+		provider.loggerFactory = mockLoggerFactory;
+		assertNull(provider.logger);
+
+		mockException = mock(DebugException.class);
+		exceptionCaptor = ArgumentCaptor.forClass(DebugException.class);
 	}
 
 	@AfterEach
@@ -144,6 +165,7 @@ class CorvusLaunchProviderTest extends AbstractProjectTest {
 
 		// Verify
 		assertEquals(mockProps, provider.props);
+		assertEquals(mockLogger, provider.logger);
 	}
 
 	@Test
@@ -165,7 +187,21 @@ class CorvusLaunchProviderTest extends AbstractProjectTest {
 
 		// Verify
 		verify(mockProcess, times(1)).terminate();
-
 	}
 
+	@Test
+	void shouldNotTerminate() throws DebugException {
+		// Prep
+		when(mockLaunch.getProcesses()).thenReturn(new IProcess[] { mockProcess });
+		doThrow(mockException).when(mockProcess).terminate();
+		provider.launches.add(mockLaunch);
+		provider.logger = mockLogger;
+
+		// Execute
+		provider.deactivate();
+
+		// Verify
+		verify(mockLogger, times(1)).warn(anyString(), eq(mockProcess), exceptionCaptor.capture());
+		assertEquals(mockException, exceptionCaptor.getValue());
+	}
 }

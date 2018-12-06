@@ -23,50 +23,64 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerFactory;
 
 import us.coastalhacking.corvus.eclipse.EclipseApi;
 import us.coastalhacking.corvus.emf.TransactionIdUtil;
 
-@Component(service=ILaunchConfigurationTab2.class, scope=ServiceScope.PROTOTYPE)
+@Component(service = ILaunchConfigurationTab2.class, scope = ServiceScope.PROTOTYPE)
 public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 
 	@Reference
+	LoggerFactory loggerFactory;
+	Logger logger;
+
+	@Reference
 	IWorkspace workspace;
-	
+
 	@Reference
 	TransactionIdUtil idUtil;
-	
+
 	ButtonListener buttonListener = new ButtonListener();
-	
+
 	Text projectText;
+
+	@Activate
+	void activate() {
+		logger  = loggerFactory.getLogger(ILaunchConfigurationTab2.class);
+	}
 	
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		// called once
-		configuration.setAttribute(EclipseApi.IResourceChangeListener.Properties.MARKER_TYPE, EclipseApi.Marker.BASE_MARKER);
+		configuration.setAttribute(EclipseApi.IResourceChangeListener.Properties.MARKER_TYPE,
+				EclipseApi.Marker.BASE_MARKER);
 	}
 
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		// called once
+		String projectName;
 		try {
-			String projectName = idUtil.getId(configuration.getAttributes());
-			if (projectName != null) {
-				IProject maybeProject = workspace.getRoot().getProject(projectName);
-				if (maybeProject != null) {
-					projectText.setText(projectName);
-				} else {
-					// TODO log
-				}
-			}
+			projectName = idUtil.getId(configuration.getAttributes());
 		} catch (CoreException e) {
-			// TODO log
-			e.printStackTrace();
+			logger.warn("Could not get attributes from configuration", e);
+			projectName = null;
 		}
 
+		if (projectName != null) {
+			final IProject maybeProject = workspace.getRoot().getProject(projectName);
+			if (maybeProject != null) {
+				projectText.setText(projectName);
+			} else {
+				logger.warn("Transaction ID '{}' does not match a project in the workspace", projectName);
+			}
+		}
 	}
 
 	@Override
@@ -78,11 +92,8 @@ public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 			try {
 				idUtil.putId(configuration.getAttributes(), id);
 			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn("Could not get attributes from configuration", e);
 			}
-//			configuration.setAttribute(EmfApi.TransactionalEditingDomain.Properties.ID, id);
-			//configuration.setAttribute(EmfApi.ResourceInitializer.Properties.PROJECT, id);
 		}
 	}
 
@@ -93,27 +104,27 @@ public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 
 	@Override
 	public void createControl(Composite parent) {
-        Composite comp = new Group(parent, SWT.BORDER);
-        setControl(comp);
+		Composite comp = new Group(parent, SWT.BORDER);
+		setControl(comp);
 
-        GridLayoutFactory.swtDefaults().numColumns(3).applyTo(comp);
+		GridLayoutFactory.swtDefaults().numColumns(3).applyTo(comp);
 
-        // Project
-        Label label = new Label(comp, SWT.NONE);
-        label.setText("Project:");
-        GridDataFactory.swtDefaults().applyTo(label);
+		// Project
+		Label label = new Label(comp, SWT.NONE);
+		label.setText("Project:");
+		GridDataFactory.swtDefaults().applyTo(label);
 
-        projectText = new Text(comp, SWT.BORDER);
-        projectText.addModifyListener(buttonListener);
-        GridDataFactory.swtDefaults().align(SWT.FILL, SWT.CENTER).grab(true,false).applyTo(projectText);
-        
-        Button button = new Button(comp, SWT.PUSH);
-        button.setFont(comp.getFont());
-        button.setText("Browse...");
-        button.addSelectionListener(buttonListener);
-        GridDataFactory.swtDefaults().applyTo(button);        
+		projectText = new Text(comp, SWT.BORDER);
+		projectText.addModifyListener(buttonListener);
+		GridDataFactory.swtDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(projectText);
+
+		Button button = new Button(comp, SWT.PUSH);
+		button.setFont(comp.getFont());
+		button.setText("Browse...");
+		button.addSelectionListener(buttonListener);
+		GridDataFactory.swtDefaults().applyTo(button);
 	}
-	
+
 	public class ButtonListener implements SelectionListener, ModifyListener {
 
 		@Override
@@ -123,19 +134,20 @@ public class CorvusTabProvider extends AbstractLaunchConfigurationTab {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			ILabelProvider labelProvider =  new LabelProvider() {
+			ILabelProvider labelProvider = new LabelProvider() {
 				public String getText(Object element) {
 					if (element instanceof IProject) {
-						return ((IProject)element).getFullPath().toPortableString();
+						return ((IProject) element).getFullPath().toPortableString();
 					}
 					return null;
 				}
 			};
+
 			ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(), labelProvider);
 			dialog.setTitle("Corvus Project Selection");
 			dialog.setMessage("Select a project to store Corvus files");
-
 			dialog.setElements(workspace.getRoot().getProjects());
+
 			if (dialog.open() == Window.OK) {
 				IProject project = (IProject) dialog.getFirstResult();
 				if (project != null) {

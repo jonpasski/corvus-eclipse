@@ -18,6 +18,7 @@ import us.coastalhacking.corvus.emf.ResourceInitializer;
 
 // TODO: consider making a component factory and referencing
 // the transaction id util to get the project uri
+@Deprecated
 public class InitializingResourcesJob extends WorkspaceJob {
 
 	private final List<ResourceInitializer> initializers;

@@ -21,6 +21,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerFactory;
 
 import us.coastalhacking.corvus.eclipse.EclipseApi;
 import us.coastalhacking.corvus.emf.TransactionIdUtil;
@@ -28,19 +30,24 @@ import us.coastalhacking.corvus.emf.TransactionIdUtil;
 @Component(factory = EclipseApi.CorvusLaunch.Component.FACTORY)
 public class CorvusLaunchProvider extends LaunchConfigurationDelegate {
 
-	@Reference(name = EclipseApi.CorvusLaunch.Reference.APP_FACTORY, target = "(" + ComponentConstants.COMPONENT_FACTORY
-			+ "=" + EclipseApi.CorvusApp.Component.FACTORY + ")")
-	ComponentFactory appFactory;
-
 	Map<String, Object> props;
 	final List<ILaunch> launches = new CopyOnWriteArrayList<>();
 	AtomicBoolean deactivated = new AtomicBoolean(false);
 
+	@Reference(name = EclipseApi.CorvusLaunch.Reference.APP_FACTORY, target = "(" + ComponentConstants.COMPONENT_FACTORY
+			+ "=" + EclipseApi.CorvusApp.Component.FACTORY + ")")
+	ComponentFactory appFactory;
+
 	@Reference
 	TransactionIdUtil idUtil;
 
+	@Reference
+	LoggerFactory loggerFactory;
+	Logger logger;
+
 	@Activate
 	void activate(Map<String, Object> props) {
+		logger = loggerFactory.getLogger(ComponentFactory.class);
 		this.props = props;
 	}
 
@@ -54,8 +61,7 @@ public class CorvusLaunchProvider extends LaunchConfigurationDelegate {
 			try {
 				p.terminate();
 			} catch (DebugException e) {
-				// TODO log
-				e.printStackTrace();
+				logger.warn("Could not terminate process {}", p, e);
 			}
 		});
 		launches.clear();
@@ -73,5 +79,4 @@ public class CorvusLaunchProvider extends LaunchConfigurationDelegate {
 		IProcess process = new CorvusAppProcessBase(launch, instance, id);
 		launch.addProcess(process);
 	}
-
 }

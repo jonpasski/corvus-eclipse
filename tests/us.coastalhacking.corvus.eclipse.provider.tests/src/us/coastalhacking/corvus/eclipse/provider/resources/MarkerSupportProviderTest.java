@@ -2,8 +2,13 @@ package us.coastalhacking.corvus.eclipse.provider.resources;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.concurrent.CompletableFuture;
@@ -11,21 +16,29 @@ import java.util.concurrent.Future;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerFactory;
 
 import us.coastalhacking.corvus.eclipse.EclipseApi;
 import us.coastalhacking.corvus.eclipse.MarkerSupport;
 import us.coastalhacking.corvus.eclipse.MarkerSupport.Coordinate;
-import us.coastalhacking.corvus.eclipse.provider.resources.MarkerSupportProvider;
+import us.coastalhacking.corvus.emf.TransactionIdUtil;
 import us.coastalhacking.corvus.test.util.AbstractProjectTest;
 
 public class MarkerSupportProviderTest extends AbstractProjectTest {
@@ -34,8 +47,43 @@ public class MarkerSupportProviderTest extends AbstractProjectTest {
 		super();
 	}
 
+	// Mock
+	//
+	TransactionIdUtil mockUtil;
+	IWorkspace mockSpace;
+	IWorkspaceRoot mockRoot;
+	Text projectText;
+	IProject mockProject;
+	static final String mockProjectName = "mockProject";
+
+	MarkerSupportProvider provider;
+	LoggerFactory mockLoggerFactory;
+	Logger mockLogger;
+	Exception mockException;
+	ArgumentCaptor<Exception> exceptionCaptor;
+
+	@BeforeEach
+	void subBeforeEach() {
+		provider = new MarkerSupportProvider();
+		mockLogger = mock(Logger.class);
+		mockLoggerFactory = mock(LoggerFactory.class);
+		when(mockLoggerFactory.getLogger(any(Class.class))).thenReturn(mockLogger);
+		provider.loggerFactory = mockLoggerFactory;
+		assertNull(provider.logger);
+
+		mockException = mock(Exception.class);
+		exceptionCaptor = ArgumentCaptor.forClass(Exception.class);
+		
+		mockSpace = mock(IWorkspace.class);
+		provider.workspace = mockSpace;
+		mockRoot = mock(IWorkspaceRoot.class);
+		when(mockSpace.getRoot()).thenReturn(mockRoot);
+		mockProject = mock(IProject.class);
+		when(mockProject.getName()).thenReturn(mockProjectName);
+	}
+
 	@Test
-	void shouldConfigure() throws Exception {	
+	void shouldConfigure() throws Exception {
 		MarkerSupport supportProvider = serviceTrackerHelper(MarkerSupport.class);
 		assertNotNull(supportProvider);
 	}
@@ -48,22 +96,22 @@ public class MarkerSupportProviderTest extends AbstractProjectTest {
 		int charStart = 0;
 		int charEnd = 4;
 		MarkerSupport.Coordinate coordinate = new MarkerSupport.Coordinate() {
-			
+
 			@Override
 			public String selected() {
 				return selected;
 			}
-			
+
 			@Override
 			public int lineNumber() {
 				return lineNumber;
 			}
-			
+
 			@Override
 			public int charStart() {
 				return charStart;
 			}
-			
+
 			@Override
 			public int charEnd() {
 				return charEnd;
@@ -72,10 +120,10 @@ public class MarkerSupportProviderTest extends AbstractProjectTest {
 		String expectedText = "This is text";
 		String filename = "shouldGetRule";
 		final IFile file = createFile(filename, expectedText);
-		
+
 		MarkerSupportProvider provider = new MarkerSupportProvider();
 		provider.workspace = workspace;
-		
+
 		String markerType = EclipseApi.Marker.BASE_MARKER;
 		// Call and verify
 		IMarker[] markers = file.findMarkers(markerType, true, IResource.DEPTH_ZERO);
@@ -88,7 +136,25 @@ public class MarkerSupportProviderTest extends AbstractProjectTest {
 		IMarker marker = markers[0];
 		assertEquals(markerType, marker.getType());
 	}
-	
+
+	@Test
+	void shouldNotCreateMarkerLogException() {
+		// Prep
+		provider.logger = mockLogger;
+		when(mockRoot.findMember(mockProjectName)).thenReturn(null);
+		
+		// Execute
+		provider.createMarker(null, mockProjectName, null);
+		
+		// Verify
+		verify(mockLogger, times(1)).warn(anyString(), exceptionCaptor.capture());
+		assertTrue(exceptionCaptor.getValue() instanceof IllegalArgumentException);
+		IllegalArgumentException illegal = (IllegalArgumentException)exceptionCaptor.getValue();
+		String message = illegal.getMessage();
+		assertTrue(message.contains(mockProjectName));
+		
+	}
+
 	public interface EditorResource extends IResource, IEditorInput {
 
 	}
@@ -147,39 +213,31 @@ public class MarkerSupportProviderTest extends AbstractProjectTest {
 		assertEquals(expectedText, coordinate.selected());
 	}
 
-
-/*
-	@Disabled("Needs to run as itest")
-	@Test
-	void shouldRunResourceJob() throws Exception {
-
-		@SuppressWarnings("unchecked")
-		CompletableFuture<Void> future = mock(CompletableFuture.class);
-		IResource resource = mock(IResource.class);
-		IMarker marker = mock(IMarker.class);
-		when(resource.createMarker(any())).thenReturn(marker);
-		Coordinate coordinate = mock(Coordinate.class);
-
-		int charStart = 0;
-		int charEnd = 10;
-		int lineNumber = 0;
-		String selected = "Common raven";
-		when(coordinate.charStart()).thenReturn(charStart);
-		when(coordinate.charEnd()).thenReturn(charEnd);
-		when(coordinate.lineNumber()).thenReturn(lineNumber);
-		when(coordinate.selected()).thenReturn(selected);
-
-		String markerId = "";
-		MarkerSupportProvider impl = new MarkerSupportProvider();
-		impl.id = "foo.bar";
-		ResourceJob job = impl.new ResourceJob(future, markerId, resource, coordinate);
-		job.runInWorkspace(null);
-
-		verify(marker).setAttribute(IMarker.CHAR_START, charStart);
-		verify(marker).setAttribute(IMarker.CHAR_END, charEnd);
-		// 1 offset
-		verify(marker).setAttribute(IMarker.LINE_NUMBER, lineNumber + 1);
-		verify(marker).setAttribute(IMarker.MESSAGE, selected);
-	}	
- */
+	/*
+	 * @Disabled("Needs to run as itest")
+	 * 
+	 * @Test void shouldRunResourceJob() throws Exception {
+	 * 
+	 * @SuppressWarnings("unchecked") CompletableFuture<Void> future =
+	 * mock(CompletableFuture.class); IResource resource = mock(IResource.class);
+	 * IMarker marker = mock(IMarker.class);
+	 * when(resource.createMarker(any())).thenReturn(marker); Coordinate coordinate
+	 * = mock(Coordinate.class);
+	 * 
+	 * int charStart = 0; int charEnd = 10; int lineNumber = 0; String selected =
+	 * "Common raven"; when(coordinate.charStart()).thenReturn(charStart);
+	 * when(coordinate.charEnd()).thenReturn(charEnd);
+	 * when(coordinate.lineNumber()).thenReturn(lineNumber);
+	 * when(coordinate.selected()).thenReturn(selected);
+	 * 
+	 * String markerId = ""; MarkerSupportProvider impl = new
+	 * MarkerSupportProvider(); impl.id = "foo.bar"; ResourceJob job = impl.new
+	 * ResourceJob(future, markerId, resource, coordinate);
+	 * job.runInWorkspace(null);
+	 * 
+	 * verify(marker).setAttribute(IMarker.CHAR_START, charStart);
+	 * verify(marker).setAttribute(IMarker.CHAR_END, charEnd); // 1 offset
+	 * verify(marker).setAttribute(IMarker.LINE_NUMBER, lineNumber + 1);
+	 * verify(marker).setAttribute(IMarker.MESSAGE, selected); }
+	 */
 }

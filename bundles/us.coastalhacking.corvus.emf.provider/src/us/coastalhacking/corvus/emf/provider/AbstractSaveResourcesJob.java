@@ -12,6 +12,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
+@Deprecated
 public abstract class AbstractSaveResourcesJob extends WorkspaceJob {
 
 	private final TransactionalEditingDomain domain;

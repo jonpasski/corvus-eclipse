@@ -22,6 +22,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerFactory;
 
 import us.coastalhacking.corvus.eclipse.EclipseApi;
 import us.coastalhacking.corvus.eclipse.MarkerSupport;
@@ -29,6 +31,10 @@ import us.coastalhacking.corvus.eclipse.MarkerSupport;
 @Component(service = MarkerSupport.class, configurationPid = EclipseApi.MarkerSupport.Component.CONFIG_PID, immediate=true)
 public class MarkerSupportProvider implements MarkerSupport {
 
+	@Reference
+	LoggerFactory loggerFactory;
+	Logger logger;
+	
 	@Reference
 	IWorkbench workbench;
 
@@ -39,6 +45,7 @@ public class MarkerSupportProvider implements MarkerSupport {
 	
 	@Activate
 	void activate(BundleContext bundleContext) {
+		logger = loggerFactory.getLogger(MarkerSupport.class);
 		this.id = bundleContext.getBundle().getSymbolicName();
 		eclipseContext = workbench.getApplication().getContext();
 	}
@@ -54,9 +61,8 @@ public class MarkerSupportProvider implements MarkerSupport {
 	public Future<Void> createMarker(Coordinate coordinate, String resourceFullPath, String markerType) {
 
 		final CompletableFuture<Void> future = new CompletableFuture<>();
-		// TODO: log by adding a logging callback to the future via thenAccept
 		future.exceptionally(ex -> {
-			ex.printStackTrace();
+			logger.warn("Completed future with an exception", ex);
 			return null;
 		});
 
