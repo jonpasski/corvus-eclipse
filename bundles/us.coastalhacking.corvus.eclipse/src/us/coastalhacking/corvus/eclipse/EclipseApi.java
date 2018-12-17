@@ -1,5 +1,7 @@
 package us.coastalhacking.corvus.eclipse;
 
+import us.coastalhacking.corvus.emf.MarkerApi;
+
 public interface EclipseApi {
 
 	interface ResourceSetListener {
@@ -11,8 +13,9 @@ public interface EclipseApi {
 	}
 
 	interface Marker {
-		String BASE_MARKER = "us.coastalhacking.corvus.eclipse.base";
-		String ENTRY_POINT = "us.coastalhacking.corvus.eclipse.entrypoint";
+		// FIXME: dirty hack because item providers are in emf package
+		String BASE_MARKER = MarkerApi.Type.BASE;
+		String ENTRY_POINT = MarkerApi.Type.ENTRY_POINT;
 	}
 
 	interface Fragment {

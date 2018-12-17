@@ -235,6 +235,8 @@
           name="org.eclipse.emf.ecore.xcore.feature.group"/>
       <requirement
           name="org.eclipse.equinox.cm"/>
+      <requirement
+          name="org.apache.httpcomponents.httpclient"/>
       <sourceLocator
           rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
