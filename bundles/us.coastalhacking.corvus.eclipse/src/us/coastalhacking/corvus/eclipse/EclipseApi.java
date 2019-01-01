@@ -13,6 +13,7 @@ public interface EclipseApi {
 	}
 
 	interface Marker {
+		// TODO: undo the item provider madness
 		// FIXME: dirty hack because item providers are in emf package
 		String BASE_MARKER = MarkerApi.Type.BASE;
 		String ENTRY_POINT = MarkerApi.Type.ENTRY_POINT;
@@ -52,6 +53,14 @@ public interface EclipseApi {
 		}
 	}
 
+	interface IWorkspaceListenerConsumer {
+		String CONFIG_PID = "corvus.eclipse.workspacelistenerconsumer";
+	}
+	
+	interface IMarkerDeltaEventFunction {
+		String CONFIG_PID = "corvus.eclipse.markerdeltaevent";
+	}
+	
 	interface ResourceModifiedListener {
 		interface Component {
 			String CONFIG_PID = "corvus.resourcemodified.listener";

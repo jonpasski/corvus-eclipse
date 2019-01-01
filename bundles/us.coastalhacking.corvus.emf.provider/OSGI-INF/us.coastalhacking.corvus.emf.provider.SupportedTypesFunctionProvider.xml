@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="us.coastalhacking.corvus.emf.provider.SupportedTypesFunctionProvider">
+   <service>
+      <provide interface="us.coastalhacking.corvus.emf.SupportedTypesFunction"/>
+   </service>
+   <implementation class="us.coastalhacking.corvus.emf.provider.SupportedTypesFunctionProvider"/>
+</scr:component>

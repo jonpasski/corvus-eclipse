@@ -11,9 +11,11 @@ Service-Component: OSGI-INF/us.coastalhacking.corvus.eclipse.provider.entrypoint
  OSGI-INF/us.coastalhacking.corvus.eclipse.provider.launch.CorvusTabProvider.xml,
  OSGI-INF/us.coastalhacking.corvus.eclipse.provider.launch.CorvusLaunchTabProvider.xml,
  OSGI-INF/us.coastalhacking.corvus.eclipse.provider.launch.CorvusLaunchProvider.xml,
- OSGI-INF/us.coastalhacking.corvus.eclipse.provider.resources.MarkerSupportProvider.xml,
- OSGI-INF/us.coastalhacking.corvus.eclipse.provider.resources.EclipseResourcesChangeListenerProvider.xml,
- OSGI-INF/us.coastalhacking.corvus.eclipse.provider.app.CorvusAppFactoryProvider.xml
+ OSGI-INF/us.coastalhacking.corvus.eclipse.provider.app.CorvusAppFactoryProvider.xml,
+ OSGI-INF/us.coastalhacking.corvus.eclipse.provider.resources.ResourceChangeEventPublisherProvider.xml,
+ OSGI-INF/us.coastalhacking.corvus.eclipse.provider.resources.IMarkerDeltaEventFunctionProvider.xml,
+ OSGI-INF/us.coastalhacking.corvus.eclipse.provider.resources.IWorkspaceListenerConsumer.xml,
+ OSGI-INF/us.coastalhacking.corvus.eclipse.provider.resources.MarkerSupportProvider.xml
 Bundle-ActivationPolicy: lazy
 Import-Package: javax.inject,
  org.eclipse.core.resources,

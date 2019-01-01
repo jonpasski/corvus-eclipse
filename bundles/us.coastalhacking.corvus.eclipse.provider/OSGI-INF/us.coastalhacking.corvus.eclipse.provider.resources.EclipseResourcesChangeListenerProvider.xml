@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" activate="activate" configuration-pid="corvus.eclipse.ircl" configuration-policy="require" deactivate="deactivate" immediate="true" name="us.coastalhacking.corvus.eclipse.provider.resources.EclipseResourcesChangeListenerProvider">
-   <service>
-      <provide interface="org.eclipse.core.resources.IResourceChangeListener"/>
-   </service>
-   <reference cardinality="1..1" field="domainProvider" interface="org.eclipse.emf.edit.domain.IEditingDomainProvider" name="corvus.emf.iedp.name"/>
-   <reference cardinality="1..1" field="workspace" interface="org.eclipse.core.resources.IWorkspace" name="workspace"/>
-   <implementation class="us.coastalhacking.corvus.eclipse.provider.resources.EclipseResourcesChangeListenerProvider"/>
-</scr:component>

@@ -32,7 +32,7 @@ import us.coastalhacking.corvus.semiotics.IResource;
 import us.coastalhacking.corvus.semiotics.IWorkspaceRoot;
 import us.coastalhacking.corvus.semiotics.SemioticsFactory;
 
-@Component(service = IResourceChangeListener.class, configurationPid = EclipseApi.IResourceChangeListener.Component.CONFIG_PID, configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true)
+//@Component(service = IResourceChangeListener.class, configurationPid = EclipseApi.IResourceChangeListener.Component.CONFIG_PID, configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true)
 public class EclipseResourcesChangeListenerProvider implements IResourceChangeListener {
 
 	private String markerType;

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" activate="activate" configuration-pid="corvus.eclipse.markerdeltaevent" configuration-policy="require" immediate="true" name="us.coastalhacking.corvus.eclipse.provider.resources.IMarkerDeltaEventFunctionProvider">
+   <property name="corvus.event.supportedTypes" value="org.eclipse.core.resources.IMarkerDelta"/>
+   <service>
+      <provide interface="us.coastalhacking.corvus.emf.EventFunction"/>
+   </service>
+   <implementation class="us.coastalhacking.corvus.eclipse.provider.resources.IMarkerDeltaEventFunctionProvider"/>
+</scr:component>

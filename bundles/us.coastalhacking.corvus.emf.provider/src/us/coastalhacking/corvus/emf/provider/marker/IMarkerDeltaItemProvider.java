@@ -1,30 +1,25 @@
 package us.coastalhacking.corvus.emf.provider.marker;
 
 import java.net.URISyntaxException;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.apache.http.client.utils.URIBuilder;
+//import org.apache.http.client.utils.URIBuilder;
 import org.eclipse.core.resources.IMarkerDelta;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 
 import us.coastalhacking.corvus.emf.ILocationItemProvider;
-import us.coastalhacking.corvus.emf.NotificationItemProvider;
+import us.coastalhacking.corvus.emf.INotificationItemProvider;
 import us.coastalhacking.corvus.emf.MarkerApi;
 import us.coastalhacking.corvus.emf.MarkerApi.Marker.Base;
-import us.coastalhacking.corvus.emf.lsp.DocumentUri;
-import us.coastalhacking.corvus.emf.provider.lsp.ImmutableDocumentUri;
-import us.coastalhacking.corvus.emf.provider.lsp.ImmutableRange;
 
 public class IMarkerDeltaItemProvider extends ItemProviderAdapter
-		implements IChangeNotifier, NotificationItemProvider,  ILocationItemProvider {
+		implements IChangeNotifier, ILocationItemProvider, INotificationItemProvider {
 
 	public IMarkerDeltaItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
@@ -72,61 +67,92 @@ public class IMarkerDeltaItemProvider extends ItemProviderAdapter
 		URI resourceUri = URI.createPlatformResourceURI(fullPath, true);
 
 		Optional<String> result = Optional.empty();
-		try {
-			URIBuilder builder = new URIBuilder(resourceUri.toString());
-			String markerType = delta.getType();
-			builder.addParameter(MarkerApi.DocumentUri.PARAM_TYPE, markerType);
-			result = Optional.of(builder.build().toString()); 
-		} catch (URISyntaxException e) {
-			// gobble
-		}
+		// FIXME: commented out to remove apache dep
+//		try {
+//			URIBuilder builder = new URIBuilder(resourceUri.toString());
+//			String markerType = delta.getType();
+//			builder.addParameter(MarkerApi.DocumentUri.PARAM_TYPE, markerType);
+//			result = Optional.of(builder.build().toString());
+//		} catch (URISyntaxException e) {
+//			// gobble
+//		}
 		return result;
 	}
 
 	@Override
-	public Notification getNotification(Object object) {
-		Object adapter = getRootAdapterFactory().adapt(object, ILocationItemProvider.class);
-		Notification result = null;
-
-		try {
-			if (adapter instanceof ILocationItemProvider) {
-				ILocationItemProvider lp = (ILocationItemProvider) adapter;
-				ImmutableRange<Integer> range = new ImmutableRange.ImmutableInteger(lp.getStartCharacter(object).get(), lp.getStartLine(object).get(),
-						lp.getEndCharacter(object).get(), lp.getEndLine(object).get());
-	
-				ImmutableDocumentUri documentUri = new ImmutableDocumentUri(lp.getDocumentUri(object).get(), range);
-	
-				class DocumentUriNotification extends NotificationImpl {
-	
-					public DocumentUriNotification(int eventType, Object oldValue, Object newValue) {
-						super(eventType, oldValue, newValue);
-					}
-	
-					@Override
-					public int getFeatureID(Class<?> expectedClass) {
-						return DocumentUri.DOCUMENT_URI__RANGE;
-					}
-	
-					@Override
-					public Object getNotifier() {
-						return documentUri;
-					}
-				}
-	
-				IMarkerDelta delta = (IMarkerDelta) object;
-				switch (delta.getKind()) {
-				// TODO: IResourceDelta.CHANGED
-				case IResourceDelta.ADDED:
-					result = new DocumentUriNotification(Notification.ADD, null, range);
-					break;
-				case IResourceDelta.REMOVED:
-					result = new DocumentUriNotification(Notification.REMOVE, range, null);
-					break;
-				}
-			}
-		} catch (NoSuchElementException e) {
-			// gobble Optional runtime exception
+	public Optional<Integer> getEventType(Object object) {
+		IMarkerDelta delta = (IMarkerDelta) object;
+		switch (delta.getKind()) {
+		case IResourceDelta.ADDED:
+			return Optional.of(Notification.ADD);
+		case IResourceDelta.REMOVED:
+			return Optional.of(Notification.REMOVE);
 		}
-		return result;
+		return Optional.empty();
 	}
+
+	@Override
+	public Object getOldValue(Object object) {
+		IMarkerDelta delta = (IMarkerDelta) object;
+		switch (delta.getKind()) {
+		case IResourceDelta.REMOVED:
+			return getRootAdapterFactory().adapt(delta, ILocationItemProvider.class);
+		}
+		return null;
+	}
+
+	@Override
+	public Object getNewValue(Object object) {
+		IMarkerDelta delta = (IMarkerDelta) object;
+		switch (delta.getKind()) {
+		case IResourceDelta.ADDED:
+			return getRootAdapterFactory().adapt(delta, ILocationItemProvider.class);
+		}
+		return null;
+	}
+
+//	@Override
+//	public Notification getNotification(Object object) {
+//		IMarkerDelta delta = (IMarkerDelta) object;
+//
+//		Object adapter = getRootAdapterFactory().adapt(delta, ILocationItemProvider.class);
+//		Notification result = null;
+//
+//		try {
+//			if (adapter instanceof ILocationItemProvider) {
+//				ILocationItemProvider lp = (ILocationItemProvider) adapter;
+//					
+//				class LocationNotification extends NotificationImpl {
+//	
+//					public LocationNotification(int eventType, Object oldValue, Object newValue) {
+//						super(eventType, oldValue, newValue);
+//					}
+//	
+//					@Override
+//					public int getFeatureID(Class<?> expectedClass) {
+//						return ILocationItemProvider.LOCATION__URI_RANGE;
+//					}
+//	
+//					@Override
+//					public Object getNotifier() {
+//						return documentUri;
+//					}
+//				}
+//	
+//				IMarkerDelta delta = (IMarkerDelta) object;
+//				switch (delta.getKind()) {
+//				// TODO: IResourceDelta.CHANGED
+//				case IResourceDelta.ADDED:
+//					result = new LocationNotification(Notification.ADD, null, range);
+//					break;
+//				case IResourceDelta.REMOVED:
+//					result = new LocationNotification(Notification.REMOVE, range, null);
+//					break;
+//				}
+//			}
+//		} catch (NoSuchElementException e) {
+//			// gobble Optional runtime exception
+//		}
+//		return result;
+//	}
 }

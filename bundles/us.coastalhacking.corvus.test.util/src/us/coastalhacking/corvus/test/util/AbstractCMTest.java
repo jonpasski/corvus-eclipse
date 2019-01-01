@@ -12,8 +12,10 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
@@ -120,9 +122,26 @@ public abstract class AbstractCMTest {
 				.collect(Collectors.joining()));
 	}
 	
+	String entryToString(Map.Entry<String, Object> entry) {
+		Stream<String> stream = null;
+		Object value = entry.getValue();
+		if (value instanceof String[]) {
+			stream = Stream.of((String[])value);
+		} else {
+			stream = Stream.of(value.toString());
+		}
+		return stream.map(this::weaklyEscapeForLdapSearchFilter).map(v -> String.format("(%s=%s)", entry.getKey(), v)).collect(Collectors.joining());
+	}
+
+	// TODO: delete commented code
+//	protected String toFilter(Map<String, Object> props) {
+//		return String.format("(&%s)", props.entrySet().stream().map(
+//				es -> String.format("(%s=%s)", es.getKey(), weaklyEscapeForLdapSearchFilter((String) es.getValue())))
+//				.collect(Collectors.joining()));
+//	}
+
 	protected String toFilter(Map<String, Object> props) {
-		return String.format("(&%s)", props.entrySet().stream().map(
-				es -> String.format("(%s=%s)", es.getKey(), weaklyEscapeForLdapSearchFilter((String) es.getValue())))
+		return String.format("(&%s)", props.entrySet().stream().map(this::entryToString)
 				.collect(Collectors.joining()));
 	}
 

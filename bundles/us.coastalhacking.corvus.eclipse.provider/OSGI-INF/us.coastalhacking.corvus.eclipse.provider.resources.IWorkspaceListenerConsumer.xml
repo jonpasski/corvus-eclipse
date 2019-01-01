@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" configuration-pid="corvus.eclipse.workspacelistenerconsumer" configuration-policy="require" immediate="true" name="us.coastalhacking.corvus.eclipse.provider.resources.IWorkspaceListenerConsumer">
+   <service>
+      <provide interface="us.coastalhacking.corvus.eclipse.provider.resources.IWorkspaceListenerConsumer"/>
+   </service>
+   <reference bind="setResourceChangeListener" interface="org.eclipse.core.resources.IResourceChangeListener" name="ResourceChangeListener" unbind="unsetResourceChangeListener"/>
+   <reference cardinality="1..1" field="workspace" interface="org.eclipse.core.resources.IWorkspace" name="workspace"/>
+   <implementation class="us.coastalhacking.corvus.eclipse.provider.resources.IWorkspaceListenerConsumer"/>
+</scr:component>

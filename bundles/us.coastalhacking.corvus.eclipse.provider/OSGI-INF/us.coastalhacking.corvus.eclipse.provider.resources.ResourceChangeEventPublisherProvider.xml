@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" activate="activate" configuration-pid="corvus.eclipse.ircl" configuration-policy="require" immediate="true" name="us.coastalhacking.corvus.eclipse.provider.resources.ResourceChangeEventPublisherProvider">
+   <property name="markerType" value="us.coastalhacking.corvus.eclipse.base"/>
+   <service>
+      <provide interface="org.eclipse.core.resources.IResourceChangeListener"/>
+   </service>
+   <reference cardinality="1..1" field="eventFunc" interface="us.coastalhacking.corvus.emf.EventFunction" name="corvus.event.function" target="(corvus.event.supportedTypes=org.eclipse.core.resources.IMarkerDelta)"/>
+   <reference cardinality="1..1" field="eventAdmin" interface="org.osgi.service.event.EventAdmin" name="eventAdmin"/>
+   <implementation class="us.coastalhacking.corvus.eclipse.provider.resources.ResourceChangeEventPublisherProvider"/>
+</scr:component>

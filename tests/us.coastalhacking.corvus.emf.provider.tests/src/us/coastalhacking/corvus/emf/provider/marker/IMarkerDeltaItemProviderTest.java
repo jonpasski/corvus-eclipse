@@ -72,61 +72,61 @@ class IMarkerDeltaItemProviderTest {
 		when(mockLocation.getEndCharacter(eq(mockDelta))).thenReturn(optEndChar);
 		when(mockLocation.getEndLine(eq(mockDelta))).thenReturn(optEndLine);
 	}
-
-
-	@Test
-	void shouldGetAddNotification() {
-		// Prep
-		when(mockDelta.getKind()).thenReturn(IResourceDelta.ADDED);
-
-		// Execute
-		Notification actualNotification = provider.getNotification(mockDelta);
-		
-		// Verify
-		assertNotNull(actualNotification);
-		assertEquals(Notification.ADD, actualNotification.getEventType());
-		assertNull(actualNotification.getOldValue());
-		Object newValue = actualNotification.getNewValue();
-		assertTrue(newValue instanceof Range);
-		Range<?> actualRange = (Range<?>) newValue;
-		assertEquals(Integer.class, actualRange.getRangeType());
-		assertEquals(optStartChar.get(), actualRange.getStartCharacter());
-		assertEquals(optStartLine.get(), actualRange.getStartLine());
-		assertEquals(optEndChar.get(), actualRange.getEndCharacter());
-		assertEquals(optEndLine.get(), actualRange.getEndLine());
-		assertEquals(DocumentUri.DOCUMENT_URI__RANGE, actualNotification.getFeatureID(Range.class));
-		Object notifier = actualNotification.getNotifier();
-		assertTrue(notifier instanceof DocumentUri);
-		DocumentUri actualUri = (DocumentUri) notifier;
-		assertEquals(optDocumentUri.get(), actualUri.getUri());
-	}
-
-	@Test
-	void shouldGetRemoveNotification() {
-		// Prep
-		when(mockDelta.getKind()).thenReturn(IResourceDelta.REMOVED);
-
-		// Execute
-		Notification actualNotification = provider.getNotification(mockDelta);
-		
-		// Verify
-		assertNotNull(actualNotification);
-		assertEquals(Notification.REMOVE, actualNotification.getEventType());
-		assertNull(actualNotification.getNewValue());
-		Object newValue = actualNotification.getOldValue();
-		assertTrue(newValue instanceof Range);
-		Range<?> actualRange = (Range<?>) newValue;
-		assertEquals(Integer.class, actualRange.getRangeType());
-		assertEquals(optStartChar.get(), actualRange.getStartCharacter());
-		assertEquals(optStartLine.get(), actualRange.getStartLine());
-		assertEquals(optEndChar.get(), actualRange.getEndCharacter());
-		assertEquals(optEndLine.get(), actualRange.getEndLine());
-		assertEquals(DocumentUri.DOCUMENT_URI__RANGE, actualNotification.getFeatureID(Range.class));
-		Object notifier = actualNotification.getNotifier();
-		assertTrue(notifier instanceof DocumentUri);
-		DocumentUri actualUri = (DocumentUri) notifier;
-		assertEquals(optDocumentUri.get(), actualUri.getUri());
-	}
+// TODO: going to be removed
+//
+//	@Test
+//	void shouldGetAddNotification() {
+//		// Prep
+//		when(mockDelta.getKind()).thenReturn(IResourceDelta.ADDED);
+//
+//		// Execute
+//		Notification actualNotification = provider.getNotification(mockDelta);
+//		
+//		// Verify
+//		assertNotNull(actualNotification);
+//		assertEquals(Notification.ADD, actualNotification.getEventType());
+//		assertNull(actualNotification.getOldValue());
+//		Object newValue = actualNotification.getNewValue();
+//		assertTrue(newValue instanceof Range);
+//		Range<?> actualRange = (Range<?>) newValue;
+//		assertEquals(Integer.class, actualRange.getRangeType());
+//		assertEquals(optStartChar.get(), actualRange.getStartCharacter());
+//		assertEquals(optStartLine.get(), actualRange.getStartLine());
+//		assertEquals(optEndChar.get(), actualRange.getEndCharacter());
+//		assertEquals(optEndLine.get(), actualRange.getEndLine());
+//		assertEquals(DocumentUri.DOCUMENT_URI__RANGE, actualNotification.getFeatureID(Range.class));
+//		Object notifier = actualNotification.getNotifier();
+//		assertTrue(notifier instanceof DocumentUri);
+//		DocumentUri actualUri = (DocumentUri) notifier;
+//		assertEquals(optDocumentUri.get(), actualUri.getUri());
+//	}
+//
+//	@Test
+//	void shouldGetRemoveNotification() {
+//		// Prep
+//		when(mockDelta.getKind()).thenReturn(IResourceDelta.REMOVED);
+//
+//		// Execute
+//		Notification actualNotification = provider.getNotification(mockDelta);
+//		
+//		// Verify
+//		assertNotNull(actualNotification);
+//		assertEquals(Notification.REMOVE, actualNotification.getEventType());
+//		assertNull(actualNotification.getNewValue());
+//		Object newValue = actualNotification.getOldValue();
+//		assertTrue(newValue instanceof Range);
+//		Range<?> actualRange = (Range<?>) newValue;
+//		assertEquals(Integer.class, actualRange.getRangeType());
+//		assertEquals(optStartChar.get(), actualRange.getStartCharacter());
+//		assertEquals(optStartLine.get(), actualRange.getStartLine());
+//		assertEquals(optEndChar.get(), actualRange.getEndCharacter());
+//		assertEquals(optEndLine.get(), actualRange.getEndLine());
+//		assertEquals(DocumentUri.DOCUMENT_URI__RANGE, actualNotification.getFeatureID(Range.class));
+//		Object notifier = actualNotification.getNotifier();
+//		assertTrue(notifier instanceof DocumentUri);
+//		DocumentUri actualUri = (DocumentUri) notifier;
+//		assertEquals(optDocumentUri.get(), actualUri.getUri());
+//	}
 
 	@Test
 	void shouldGetStartCharacter() {

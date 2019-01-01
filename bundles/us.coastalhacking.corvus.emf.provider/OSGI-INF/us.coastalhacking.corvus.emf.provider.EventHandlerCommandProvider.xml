@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.3.0" activate="activate" name="us.coastalhacking.corvus.emf.provider.EventHandlerCommandProvider">
+   <property name="event.topics" value="corvus/*"/>
+   <service>
+      <provide interface="org.osgi.service.event.EventHandler"/>
+   </service>
+   <reference bind="setCommandFunction" cardinality="0..n" interface="us.coastalhacking.corvus.emf.CommandBiFunction" name="CommandFunction" policy="dynamic" policy-option="greedy" unbind="unsetCommandFunction"/>
+   <reference cardinality="1..1" field="domainProvider" interface="org.eclipse.emf.edit.domain.IEditingDomainProvider" name="corvus.emf.iedp.name"/>
+   <reference cardinality="1..1" field="supportedTypesFilter" interface="us.coastalhacking.corvus.emf.SupportedTypesFunction" name="supportedTypesFilter"/>
+   <implementation class="us.coastalhacking.corvus.emf.provider.EventHandlerCommandProvider"/>
+</scr:component>

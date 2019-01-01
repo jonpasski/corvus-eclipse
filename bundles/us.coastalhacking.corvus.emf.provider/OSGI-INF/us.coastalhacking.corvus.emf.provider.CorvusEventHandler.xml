@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="us.coastalhacking.corvus.emf.provider.CorvusEventHandler">
+   <service>
+      <provide interface="org.osgi.service.event.EventHandler"/>
+   </service>
+   <implementation class="us.coastalhacking.corvus.emf.provider.CorvusEventHandler"/>
+</scr:component>

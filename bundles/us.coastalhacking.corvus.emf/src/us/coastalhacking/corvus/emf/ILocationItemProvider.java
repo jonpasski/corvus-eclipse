@@ -8,6 +8,9 @@ import java.util.Optional;
  */
 public interface ILocationItemProvider {
 
+	// Feature ID
+	int LOCATION__URI_RANGE = 0;
+
 	// 0-relative, inclusive
 	Optional<Integer> getStartCharacter(Object object);
 

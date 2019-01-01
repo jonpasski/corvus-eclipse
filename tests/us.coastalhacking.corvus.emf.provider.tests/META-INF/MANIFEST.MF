@@ -20,6 +20,7 @@ Import-Package: org.eclipse.core.resources,
  org.eclipse.emf.transaction,
  org.junit;version="4.12.0",
  org.junit.jupiter.api;version="5.1.0",
+ org.junit.jupiter.api.function;version="5.1.0",
  org.junit.platform.commons;version="1.1.0",
  org.mockito,
  org.mockito.stubbing,
@@ -27,3 +28,4 @@ Import-Package: org.eclipse.core.resources,
  us.coastalhacking.corvus.semiotics,
  us.coastalhacking.corvus.test.util,
  us.coastalhacking.corvus.test.util.provider
+Bundle-ActivationPolicy: lazy

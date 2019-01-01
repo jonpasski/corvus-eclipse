@@ -10,6 +10,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
+// TODO: move out of the API package
 public class EventPublishingHandler {
 
 	@Inject
